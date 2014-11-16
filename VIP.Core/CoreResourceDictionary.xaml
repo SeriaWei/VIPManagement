@@ -1,0 +1,42 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<ControlTemplate x:Key="ButtonIconOnly" TargetType="{x:Type Button}">
+		<Grid Margin="1">
+			<ContentPresenter x:Name="contentPresenter" RenderTransformOrigin="0.5,0.5">
+				<ContentPresenter.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</ContentPresenter.RenderTransform></ContentPresenter>
+		</Grid>
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsPressed" Value="True">
+				<Setter Property="Margin" TargetName="contentPresenter" Value="0"/>
+				<Setter Property="RenderTransform" TargetName="contentPresenter">
+					<Setter.Value>
+						<TransformGroup>
+							<ScaleTransform ScaleX="0.8" ScaleY="0.75"/>
+							<SkewTransform/>
+							<RotateTransform/>
+							<TranslateTransform/>
+						</TransformGroup>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	<Style x:Key="LabelStyle" TargetType="{x:Type Label}">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Label}">
+						<ContentPresenter Margin="2"></ContentPresenter>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	<!-- 应该在此定义资源字典条目。-->
+</ResourceDictionary>
