@@ -31,8 +31,11 @@ namespace Easy.WPF.Controls
 
         public override System.Collections.ObjectModel.ReadOnlyObservableCollection<ValidationError> GetValidateErrors()
         {
-            DataBinding.ValidationRules.Each(m => m.Validate());
-             Validation.GetErrors(TextBox_Value);
+            if (TextBox_Value.GetBindingExpression(TextBox.TextProperty).ValidateWithoutUpdate())
+            {
+                TextBox_Value.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            }
+            return Validation.GetErrors(TextBox_Value);
         }
     }
 }
