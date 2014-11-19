@@ -48,7 +48,7 @@
         <ImageBrush ImageSource="Images/HisBackGround.png"/>
     </Window.Background>
     <Window.CommandBindings>
-        <CommandBinding Command="{StaticResource ResourceKey=TopMenu}"></CommandBinding>
+        <CommandBinding Command="Core:TopMenu.TopMenuClickCommand" Executed="Core:TopMenu.TopMenu_Click"></CommandBinding>
     </Window.CommandBindings>
 	<Grid x:Name="grid">
 		<Grid.RowDefinitions>
