@@ -1,7 +1,7 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Core="clr-namespace:VIP.Core.Customer;assembly=VIP.Core"
+    xmlns:Core="clr-namespace:VIP.Core.Common;assembly=VIP.Core"
     xmlns:EasyWPF="clr-namespace:Easy.WPF;assembly=Easy.WPF"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="VIPManagement.MainWindow"
@@ -33,7 +33,7 @@
         					<Trigger Property="IsMouseOver" Value="True">
         						<Setter Property="BorderBrush" TargetName="border" Value="#E5FFFFFF"/>
         					</Trigger>
-        					<Trigger Property="IsFocused" Value="True">
+        					<Trigger Property="IsEnabled" Value="False">
         						<Setter Property="BorderBrush" TargetName="border" Value="#33FFFFFF"/>
         						<Setter Property="Background" TargetName="border" Value="{x:Null}"/>
         					</Trigger>
@@ -42,40 +42,45 @@
         		</Setter.Value>
         	</Setter>
         </Style>
+        <Core:TopMenu x:Key="TopMenu"></Core:TopMenu>
     </Window.Resources>
     <Window.Background>
         <ImageBrush ImageSource="Images/HisBackGround.png"/>
     </Window.Background>
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource ResourceKey=TopMenu}"></CommandBinding>
+    </Window.CommandBindings>
 	<Grid x:Name="grid">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="110"/>
 			<RowDefinition x:Name="ManContent"/>
 		</Grid.RowDefinitions>
         <Border Grid.Row="0" BorderThickness="0,1" BorderBrush="#FF1B859C">
-            <VirtualizingStackPanel Orientation="Horizontal" Margin="10,0">
-                <Button Name="Button_Customer" Content="会 员"   Height="86" Width="105" 
+            <VirtualizingStackPanel Name="menuBar" Orientation="Horizontal" Margin="10,0">
+                <Button Name="Button_Customer" Content="会 员"   Height="86" Width="105" Command="{Binding TopMenuClickCommand, Source={StaticResource TopMenu}}"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageAccount}" Foreground="White" Margin="10"/>
 
-                <Button Content="会 员 卡"   Height="86" Width="105" 
+                <Button Name="Button_Card" Content="会 员 卡"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageCart}" Foreground="White" Margin="10"/>
 
-                <Button Content="积分兑换"   Height="86" Width="105" 
+                <Button Content="积分兑换"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageCatalogue}" Foreground="White" Margin="10"/>
 
-                <Button Content="收 银"   Height="86" Width="105" 
+                <Button Content="收 银"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageCash}" Foreground="White" Margin="10"/>
 
-                <Button Content="商 品"   Height="86" Width="105" 
+                <Button Content="商 品"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageProduct}" Foreground="White" Margin="10"/>
-                <Button Content="设 置"   Height="86" Width="105" 
+                <Button Content="设 置"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageSetting}" Foreground="White" Margin="10"/>
             </VirtualizingStackPanel>
 
         </Border>
         
-        <!--<Core:CustomerPanel Grid.Row="1"  Background="#FF3CACC5" />-->
-
-        <EasyWPF:ModelPanel Name="dd" Grid.Row="1"></EasyWPF:ModelPanel>
+        <!---->
+        <DockPanel Name="dockPanel_Main" Grid.Row="1">
+            
+        </DockPanel>
 
 	</Grid>
 </Window>

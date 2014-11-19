@@ -23,19 +23,16 @@ namespace Easy.WPF.Controls
         public Normal()
         {
             InitializeComponent();
-
-            TextBox_Value.SetBinding(TextBox.TextProperty, DataBinding);
         }
 
-
-
-        public override System.Collections.ObjectModel.ReadOnlyObservableCollection<ValidationError> GetValidateErrors()
+        public override FrameworkElement GetElement()
         {
-            if (TextBox_Value.GetBindingExpression(TextBox.TextProperty).ValidateWithoutUpdate())
-            {
-                TextBox_Value.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            }
-            return Validation.GetErrors(TextBox_Value);
+            return TextBox_Value;
+        }
+
+        public override DependencyProperty GetPeoperty()
+        {
+            return TextBox.TextProperty;
         }
     }
 }

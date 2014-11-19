@@ -35,9 +35,8 @@ namespace VIP.Core.Customer
         /// 会员卡号
         /// </summary>
         public string CardID { get; set; }
-        public DateTime LastActivedDate { get; set; }
-        public DateTime RegistDate { get; set; }
-        public bool SS { get; set; }
+        public DateTime? LastActivedDate { get; set; }
+        public DateTime? RegistDate { get; set; }
     }
     class CustomerEntityMetaData : DataViewMetaData<CustomerEntity>
     {
@@ -51,10 +50,12 @@ namespace VIP.Core.Customer
 
         protected override void ViewConfigure()
         {
+            ViewConfig(m => m.ID).AsHidden();
             ViewConfig(m => m.Title).AsHidden();
             ViewConfig(m => m.FirstName).AsTextBox().Required();
             ViewConfig(m => m.LastName).AsTextBox().Required();
             ViewConfig(m => m.LastActivedDate).AsTextBox().ReadOnly();
+            ViewConfig(m => m.Age).AsTextBox().ReadOnly();
         }
     }
 

@@ -22,12 +22,17 @@ namespace Easy.WPF.Controls
         public Normal_Date()
         {
             InitializeComponent();
-            DatePicker_Value.SetBinding(DatePicker.SelectedDateProperty, DataBinding);
         }
 
-        public override System.Collections.ObjectModel.ReadOnlyObservableCollection<ValidationError> GetValidateErrors()
+
+        public override FrameworkElement GetElement()
         {
-            return Validation.GetErrors(DatePicker_Value);
+            return DatePicker_Value;
+        }
+
+        public override DependencyProperty GetPeoperty()
+        {
+            return DatePicker.SelectedDateProperty;
         }
     }
 }

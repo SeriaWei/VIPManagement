@@ -22,12 +22,17 @@ namespace Easy.WPF.Controls
         public CheckBoxItem()
         {
             InitializeComponent();
-            CheckBox_Value.SetBinding(CheckBox.IsCheckedProperty, DataBinding);
         }
 
-        public override System.Collections.ObjectModel.ReadOnlyObservableCollection<ValidationError> GetValidateErrors()
+
+        public override FrameworkElement GetElement()
         {
-            return Validation.GetErrors(CheckBox_Value);
+            return CheckBox_Value;
+        }
+
+        public override DependencyProperty GetPeoperty()
+        {
+            return CheckBox.IsCheckedProperty;
         }
     }
 }

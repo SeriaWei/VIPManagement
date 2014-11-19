@@ -13,6 +13,12 @@ namespace Easy.WPF.Controls
     public abstract class ModelItemControlBase : UserControl
     {
         protected Binding DataBinding;
+        private FrameworkElement _customerValueElement;
+        private DependencyProperty _customerValueProperty;
+        public ModelItemControlBase()
+        {
+
+        }
         public void AddValidationRule(ValidationRule rule)
         {
             DataBinding.ValidationRules.Add(rule);
@@ -20,6 +26,8 @@ namespace Easy.WPF.Controls
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
+            _customerValueElement = GetElement();
+            _customerValueProperty = GetPeoperty();
             this.DataContext = this;
             DataBinding = new Binding("Value")
             {
@@ -28,10 +36,20 @@ namespace Easy.WPF.Controls
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 NotifyOnValidationError = true,
             };
+            _customerValueElement.SetBinding(_customerValueProperty, DataBinding);
+
+        }
+        public abstract FrameworkElement GetElement();
+        public abstract DependencyProperty GetPeoperty();
+        public virtual ReadOnlyObservableCollection<ValidationError> GetValidateErrors()
+        {
+            if (_customerValueElement.GetBindingExpression(_customerValueProperty).ValidateWithoutUpdate())
+            {
+                _customerValueElement.GetBindingExpression(_customerValueProperty).UpdateSource();
+            }
+            return Validation.GetErrors(_customerValueElement);
         }
 
-        public abstract ReadOnlyObservableCollection<ValidationError> GetValidateErrors();
-        
         public static readonly DependencyProperty LabelProperty = DependencyProperty.Register("Label", typeof(string), typeof(ModelItemControlBase));
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(object), typeof(ModelItemControlBase));
