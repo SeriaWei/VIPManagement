@@ -63,7 +63,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\TopMenuCommand.cs" />
+    <Compile Include="Command\TopMenuCommand.cs" />
     <Compile Include="Customer\CustomerEntity.cs" />
     <Compile Include="Customer\CustomerModule.cs" />
     <Compile Include="Customer\CustomerPanel.xaml.cs">
