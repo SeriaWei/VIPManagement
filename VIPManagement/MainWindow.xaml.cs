@@ -41,6 +41,7 @@ namespace VIPManagement
                 if (item is Button)
                 {
                     (item as Button).Command = command;
+                    (item as Button).CommandParameter = dockPanel_Main;
                 }
             }
             menuBar.CommandBindings.Add(binding);

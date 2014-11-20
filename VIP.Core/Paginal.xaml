@@ -4,11 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="100">
+             d:DesignHeight="25" d:DesignWidth="100">
 	
     <Grid>
-        <Button x:Name="Button_Prev" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="30"  Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
-        	<Image Source="Images/prev.png" Width="20" Height="20"></Image>
+        <Button x:Name="Button_Prev" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="25"  Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
+            <Image Source="Images/prev.png" Width="15" Height="15"></Image>
         </Button>
       
 			<VirtualizingStackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="30,0" VerticalAlignment="Center">
@@ -16,9 +16,9 @@
 				<Label Style="{StaticResource LabelStyle}" Foreground="White">/</Label>
             <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="{Binding AllPage}"></Label>
 			</VirtualizingStackPanel>
-		
-        <Button x:Name="Button_Next" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="30" Height="30" Background="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
-			<Image Source="Images/next.png" Width="20" Height="20" />
+
+        <Button x:Name="Button_Next" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="25" Height="25" Background="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
+            <Image Source="Images/next.png" Width="15" Height="15" />
 		</Button>
 
     </Grid>

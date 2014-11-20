@@ -32,18 +32,19 @@ namespace VIP.Core.Customer
             base.OnInitialized(e);
             page = new Easy.Data.Pagination { PageIndex = 0, PageSize = 20 };
             ICustomerService service = Loader.CreateInstance<ICustomerService>();
-            ListBox_Customer.ItemsSource = service.Get(new Easy.Data.DataFilter(), page);
+            listPanel.ModelType = typeof(CustomerEntity);
+            listPanel.DataSource = service.Get(new Easy.Data.DataFilter(), page);
             paginal.SetPage(page);
             paginal.PrevPageClick += (p) =>
             {
                 page.PageIndex = p;
-                ListBox_Customer.ItemsSource = service.Get(new Easy.Data.DataFilter(), page);
+                listPanel.DataSource = service.Get(new Easy.Data.DataFilter(), page);
                 paginal.SetPage(page);
             };
             paginal.NextPageClick += (p) =>
             {
                 page.PageIndex = p;
-                ListBox_Customer.ItemsSource = service.Get(new Easy.Data.DataFilter(), page);
+                listPanel.DataSource = service.Get(new Easy.Data.DataFilter(), page);
                 paginal.SetPage(page);
             };
         }

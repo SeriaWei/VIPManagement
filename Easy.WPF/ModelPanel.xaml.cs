@@ -42,9 +42,8 @@ namespace Easy.WPF
         public object Model
         {
             private get
-            {ObservableCollection<ValidationError> errors=new ObservableCollection<ValidationError>();
-
-              
+            {
+                ObservableCollection<ValidationError> errors = new ObservableCollection<ValidationError>();
                 foreach (UIElement item in ModelContent.Children)
                 {
                     if (item is ModelItemControlBase)

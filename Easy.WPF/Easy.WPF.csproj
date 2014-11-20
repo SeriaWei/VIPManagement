@@ -50,6 +50,9 @@
   <ItemGroup>
     <Compile Include="Command\UICommand.cs" />
     <Compile Include="Command\UICommandBinding.cs" />
+    <Compile Include="ListPanel.xaml.cs">
+      <DependentUpon>ListPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ValidationRuleProvide.cs" />
     <Page Include="Controls\CheckBoxItem.xaml">
       <SubType>Designer</SubType>
@@ -60,6 +63,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Normal_Date.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ListPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

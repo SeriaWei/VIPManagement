@@ -22,6 +22,8 @@ namespace VIP.Core.Common
                 }
             }
             (e.Source as Button).IsEnabled = false;
+            (e.Parameter as DockPanel).Children.Clear();
+            (e.Parameter as DockPanel).Children.Add(new Customer.CustomerPanel());
         }
 
         public override void CanExecute(object sender, CanExecuteRoutedEventArgs e)
