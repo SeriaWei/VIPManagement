@@ -48,6 +48,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\UICommand.cs" />
+    <Compile Include="Command\UICommandBinding.cs" />
     <Compile Include="ValidationRuleProvide.cs" />
     <Page Include="Controls\CheckBoxItem.xaml">
       <SubType>Designer</SubType>

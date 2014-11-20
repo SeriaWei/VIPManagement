@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Easy.Extend;
+using Easy.WPF.Command;
+using VIP.Core.Common;
 
 namespace VIPManagement
 {
@@ -23,32 +25,25 @@ namespace VIPManagement
         public MainWindow()
         {
             InitializeComponent();
-            foreach (UIElement item in menuBar.Children)
-            {
-                if (item is Button)
-                {
-                    (item as Button).Click += TopMenu_Click;
-                }
-            }
-          //  VIP.Core.Common.TopMenu menu = new VIP.Core.Common.TopMenu();
-           // CommandBinding bind = new CommandBinding(menu.TopMenuClickCommand, new ExecutedRoutedEventHandler(menu.TopMenuClick), new CanExecuteRoutedEventHandler(menu.TopMenuCanClick));
-           // Button_Customer.Command = menu.TopMenuClickCommand;
-            //this.CommandBindings.Add(bind);
+
         }
         private void TopMenu_Click(object sender, RoutedEventArgs e)
         {
-            foreach (UIElement item in menuBar.Children)
-            {
-                if (item is Button)
-                {
-                    (item as Button).IsEnabled = true;
-                }
-            }
-            (sender as Button).IsEnabled = false;
+
         }
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
+            var command = new TopMenuCommand();
+            var binding = new UICommandBinding(command);
+            foreach (UIElement item in menuBar.Children)
+            {
+                if (item is Button)
+                {
+                    (item as Button).Command = command;
+                }
+            }
+            menuBar.CommandBindings.Add(binding);
         }
 
     }
