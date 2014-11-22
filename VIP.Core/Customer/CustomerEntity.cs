@@ -54,7 +54,7 @@ namespace VIP.Core.Customer
             ViewConfig(m => m.Title).AsHidden();
             ViewConfig(m => m.FirstName).AsTextBox().Required();
             ViewConfig(m => m.LastName).AsTextBox().Required();
-            ViewConfig(m => m.LastActivedDate).AsTextBox().ReadOnly();
+            ViewConfig(m => m.LastActivedDate).AsTextBox().FormatAsDate().ReadOnly();
             ViewConfig(m => m.Age).AsTextBox().ReadOnly();
         }
     }

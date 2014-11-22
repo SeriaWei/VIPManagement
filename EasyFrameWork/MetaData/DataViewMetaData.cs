@@ -288,6 +288,21 @@ namespace Easy.MetaData
                 ViewConfig(item.Name).AsHidden();
             }
         }
+
+
+        public virtual void InitDisplayName()
+        {
+            Dictionary<string, string> lan = new Dictionary<string, string>();
+            foreach (var item in this.HtmlTags)
+            {
+                lan.Add(item.Key, item.Value.ModelType.Name + "@" + item.Key);
+            }
+            lan = Localization.InitLan(lan);
+            foreach (var item in lan)
+            {
+                this.HtmlTags[item.Key].DisplayName = item.Value;
+            }
+        }
     }
 
 }

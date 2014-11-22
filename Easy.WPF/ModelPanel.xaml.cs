@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Easy.WPF.Controls;
 using Easy.Extend;
 using System.Collections.ObjectModel;
+using Easy.WPF.Extend;
 
 namespace Easy.WPF
 {
@@ -85,51 +86,14 @@ namespace Easy.WPF
                 var tags = attribute.GetHtmlTags(true);
                 tags.Each(m =>
                 {
-                    ModelItemControlBase item = null;
-                    object proValue = null;
+                    ModelItemControlBase item = m.ToModelItemControl();
                     if (_model != null)
                     {
-                        proValue = Easy.Reflection.ClassAction.GetObjPropertyValue(_model, m.Name);
+                        var proValue = Easy.Reflection.ClassAction.GetObjPropertyValue(_model, m.Name);
+                        m.Value = proValue;
                     }
-                    if (m is Easy.HTML.Tags.TextBoxHtmlTag)
-                    {
-                        if (m.DataType.Name == "DateTime")
-                        {
-                            item = new Normal_Date();
-                        }
-                        else
-                        {
-                            item = new Normal();
-                        }
-                    }
-                    else if (m is Easy.HTML.Tags.CheckBoxHtmlTag)
-                    {
-                        item = new CheckBoxItem();
-                    }
-                    else if (m is Easy.HTML.Tags.HiddenHtmlTag)
-                    {
-                        item = new Normal();
-                        item.Visibility = System.Windows.Visibility.Collapsed;
-                    }
-                    if (item != null)
-                    {
-                        item.Name = m.Name;
-                        if (m.IsHidden)
-                        {
-                            item.Visibility = System.Windows.Visibility.Collapsed;
-                        }
-                        item.SetValue(ModelItemControlBase.LabelProperty, m.DisplayName);
-                        item.SetValue(ModelItemControlBase.IsEnabledProperty, !m.IsReadOnly);
-                        if (proValue != null)
-                        {
-                            item.SetValue(ModelItemControlBase.ValueProperty, proValue);
-                        }
-                        m.Validator.ForEach(v =>
-                        {
-                            item.AddValidationRule(new ValidationRuleProvide(v));
-                        });
-                        ModelContent.Children.Add(item);
-                    }
+                    ModelContent.Children.Add(item);
+
                 });
             }
             else

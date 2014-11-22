@@ -79,7 +79,7 @@ namespace Easy.HTML.Grid
                     if (attribute.MetaData.HtmlTags[item.Name].TagType == HTML.HTMLEnumerate.HTMLTagTypes.Input &&
                         (item.PropertyType.Name == "DateTime" || (item.PropertyType.Name == "Nullable`1" && item.PropertyType.GetGenericArguments()[0].Name == "DateTime")))
                     {
-                        string dateFormat = (attribute.MetaData.HtmlTags[item.Name] as HTML.Tags.TextBoxHtmlTag).DateFormat;
+                        string dateFormat = (attribute.MetaData.HtmlTags[item.Name] as HTML.Tags.TextBoxHtmlTag).ValueFormat;
                         DateTime dateTime = Convert.ToDateTime(value);
                         value = dateTime.ToString(dateFormat);
                     }
@@ -130,7 +130,7 @@ namespace Easy.HTML.Grid
             {
                 case Easy.HTML.HTMLEnumerate.HTMLTagTypes.Input:
                     {
-                        format = (Tag as TextBoxHtmlTag).DateFormat;
+                        format = (Tag as TextBoxHtmlTag).ValueFormat;
                         break;
                     }
                 case Easy.HTML.HTMLEnumerate.HTMLTagTypes.DropDownList:

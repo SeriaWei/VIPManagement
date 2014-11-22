@@ -57,10 +57,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Paginal.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\TopMenuCommand.cs" />
@@ -71,9 +67,6 @@
     </Compile>
     <Compile Include="Customer\CustomerService.cs" />
     <Compile Include="Customer\ICustomerService.cs" />
-    <Compile Include="Paginal.xaml.cs">
-      <DependentUpon>Paginal.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -6,6 +6,32 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <DataGrid Name="dataGrid" AutoGenerateColumns="False"></DataGrid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <StackPanel DockPanel.Dock="Left" Name="stackPanel_Search" Orientation="Horizontal"></StackPanel>
+            <StackPanel DockPanel.Dock="Right" Name="stackPanel_ToolBar" Orientation="Horizontal">
+                <Button>dd</Button>
+            </StackPanel>
+        </DockPanel>
+        <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False"></DataGrid>
+        <Grid Grid.Row="2" Name="grid_page">
+            <Button x:Name="Button_Prev" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="25"  Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
+                <Image Source="Images/prev.png" Width="15" Height="15"></Image>
+            </Button>
+
+            <VirtualizingStackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="30,0" VerticalAlignment="Center">
+                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="{Binding PageIndex}"></Label>
+                <Label Style="{StaticResource LabelStyle}" Foreground="White">/</Label>
+                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="{Binding AllPage}"></Label>
+            </VirtualizingStackPanel>
+
+            <Button x:Name="Button_Next" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="25" Height="25" Background="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
+                <Image Source="Images/next.png" Width="15" Height="15" />
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

@@ -30,23 +30,7 @@ namespace VIP.Core.Customer
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            page = new Easy.Data.Pagination { PageIndex = 0, PageSize = 20 };
-            ICustomerService service = Loader.CreateInstance<ICustomerService>();
-            listPanel.ModelType = typeof(CustomerEntity);
-            listPanel.DataSource = service.Get(new Easy.Data.DataFilter(), page);
-            paginal.SetPage(page);
-            paginal.PrevPageClick += (p) =>
-            {
-                page.PageIndex = p;
-                listPanel.DataSource = service.Get(new Easy.Data.DataFilter(), page);
-                paginal.SetPage(page);
-            };
-            paginal.NextPageClick += (p) =>
-            {
-                page.PageIndex = p;
-                listPanel.DataSource = service.Get(new Easy.Data.DataFilter(), page);
-                paginal.SetPage(page);
-            };
+            listPanel.Service(Loader.CreateInstance<ICustomerService>());
         }
     }
 }

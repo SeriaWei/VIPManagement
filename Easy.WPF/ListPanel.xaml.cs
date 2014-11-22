@@ -13,6 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Easy.Extend;
+using Easy.WPF.ValueConverter;
+using Easy.HTML.Tags;
+using Easy.RepositoryPattern;
+using Easy.Data;
+using Easy.WPF.Extend;
 
 namespace Easy.WPF
 {
@@ -21,15 +26,21 @@ namespace Easy.WPF
     /// </summary>
     public partial class ListPanel : UserControl
     {
+        public static readonly DependencyProperty PageIndexProperty = DependencyProperty.Register("PageIndex", typeof(int), typeof(ListPanel));
+        public static readonly DependencyProperty AllPageProperty = DependencyProperty.Register("AllPage", typeof(int), typeof(ListPanel));
         public ListPanel()
         {
             InitializeComponent();
+        }
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
         }
         Type _modelType;
         public Type ModelType
         {
             get { return _modelType; }
-            set
+            private set
             {
                 _modelType = value;
                 initPanel();
@@ -39,11 +50,51 @@ namespace Easy.WPF
         public IEnumerable DataSource
         {
             get { return _dataSource; }
-            set
+            private set
             {
                 _dataSource = value;
                 dataGrid.ItemsSource = _dataSource;
             }
+        }
+        public int PageIndex
+        {
+            get { return (int)GetValue(PageIndexProperty); }
+            set { SetValue(PageIndexProperty, value); }
+        }
+        public int AllPage
+        {
+            get { return (int)GetValue(AllPageProperty); }
+            set { SetValue(AllPageProperty, value); }
+        }
+        public void Service<T>(IServiceBase<T> service) where T : class
+        {
+            ModelType = typeof(T);
+            Pagination page = new Pagination { PageIndex = 0 };
+            this.DataSource = service.Get(new DataFilter(), page);
+            PageIndex = page.PageIndexReal;
+            AllPage = page.AllPage;
+            Button_Prev.Click += (s, e) =>
+            {
+                if (PageIndex > 1)
+                {
+                    Pagination pagin = new Pagination { PageIndex = PageIndex - 2 };
+                    this.DataSource = service.Get(new DataFilter(), pagin);
+                    PageIndex = pagin.PageIndexReal;
+                    AllPage = page.AllPage;
+                }
+
+            };
+            Button_Next.Click += (s, e) =>
+            {
+                if (PageIndex < AllPage)
+                {
+                    Pagination pagin = new Pagination { PageIndex = PageIndex };
+                    this.DataSource = service.Get(new DataFilter(), pagin);
+                    PageIndex = pagin.PageIndexReal;
+                    AllPage = page.AllPage;
+                }
+            };
+            this.DataContext = this;
         }
 
         void initPanel()
@@ -55,31 +106,14 @@ namespace Easy.WPF
                 var tags = attribute.GetHtmlTags(true).OrderBy(m => m.OrderIndex);
                 tags.Each(m =>
                 {
-                    DataGridBoundColumn column = null;
-                    if (m is Easy.HTML.Tags.TextBoxHtmlTag)
+                    if (m.Grid.Searchable)
                     {
-                        column = new DataGridTextColumn();
+                        var control = m.ToModelItemControl();
+                        control.Width = 200;
+                        control.Margin = new Thickness(2);
+                        stackPanel_Search.Children.Add(control);
                     }
-                    else if (m is Easy.HTML.Tags.CheckBoxHtmlTag)
-                    {
-                        column = new DataGridCheckBoxColumn();
-                    }
-                    if (column != null)
-                    {
-                        if (!m.Grid.Visiable)
-                        {
-                            column.Visibility = System.Windows.Visibility.Collapsed;
-                        }
-                        column.Header = m.DisplayName;
-                        Binding binding = new Binding(m.Name);
-                        if (!m.ValueFormat.IsNullOrEmpty())
-                        {
-                            binding.StringFormat = m.ValueFormat;
-                        }
-                        column.Binding = binding;
-                        column.IsReadOnly = true;
-                        dataGrid.Columns.Add(column);
-                    }
+                    dataGrid.Columns.Add(m.ToDataGridBoundColumn());
                 });
             }
             else
@@ -121,10 +155,11 @@ namespace Easy.WPF
                         default:
                             break;
                     }
-                    object proValue = null;
                     dataGrid.Columns.Add(column);
                 });
             }
         }
     }
+
+
 }

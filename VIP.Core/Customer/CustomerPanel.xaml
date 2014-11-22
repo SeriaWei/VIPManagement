@@ -10,13 +10,8 @@
         <Image x:Key="ImagePlus" Source="../images/plus.png"></Image>
     </UserControl.Resources>
     <Grid Background="#FF3DACC6">
-        <Button x:Name="Button_Add" Content="添加会员" DataContext="{StaticResource ImagePlus}" HorizontalAlignment="Right" Margin="10,3,6,0" VerticalAlignment="Top" Width="79" Height="25" Template="{DynamicResource ButtonIcon}" Foreground="White"/>
-        <!--<ListBox x:Name="ListBox_Customer" Background="{x:Null}" BorderBrush="{x:Null}" ItemContainerStyle="{DynamicResource ListBoxItemStyle1}" BorderThickness="1" Margin="0,30"/>-->
-
-
-        <WPF:ListPanel Name="listPanel" Margin="0,30"/>
-        
-        <local:Paginal x:Name="paginal" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Bottom"/>
+        <!--<Button x:Name="Button_Add" Content="添加会员" DataContext="{StaticResource ImagePlus}" HorizontalAlignment="Right" Margin="10,3,6,0" VerticalAlignment="Top" Width="79" Height="25" Template="{DynamicResource ButtonIcon}" Foreground="White"/>-->
+        <WPF:ListPanel Name="listPanel" Margin="0"/>     
 
 
     </Grid>
