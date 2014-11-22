@@ -38,7 +38,7 @@ namespace VIP.Core.Customer
         public DateTime? LastActivedDate { get; set; }
         public DateTime? RegistDate { get; set; }
     }
-    class CustomerEntityMetaData : DataViewMetaData<CustomerEntity>
+    class CustomerEntityMetaData : ViewMetaData<CustomerEntity>
     {
         protected override void DataConfigure()
         {
@@ -52,10 +52,10 @@ namespace VIP.Core.Customer
         {
             ViewConfig(m => m.ID).AsHidden();
             ViewConfig(m => m.Title).AsHidden();
-            ViewConfig(m => m.FirstName).AsTextBox().Required();
+            ViewConfig(m => m.FirstName).AsTextBox().Required().SearchAble();
             ViewConfig(m => m.LastName).AsTextBox().Required();
             ViewConfig(m => m.LastActivedDate).AsTextBox().FormatAsDate().ReadOnly();
-            ViewConfig(m => m.Age).AsTextBox().ReadOnly();
+            ViewConfig(m => m.Age).AsTextBox().ReadOnly().HideInGrid().SearchAble(false);
         }
     }
 

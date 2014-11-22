@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="315">
     <DockPanel>
-        <Label DockPanel.Dock="Left" Content="{Binding Label}" Width="78" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"></Label>
+        <Label DockPanel.Dock="Left" Content="{Binding Label}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"></Label>
         <DatePicker DockPanel.Dock="Right" Name="DatePicker_Value" SelectedDate="{Binding Value,Mode=TwoWay}" IsEnabled="{Binding IsEnabled}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
     </DockPanel>
 </local:ModelItemControlBase>

@@ -92,6 +92,7 @@ namespace Easy.WPF
                         var proValue = Easy.Reflection.ClassAction.GetObjPropertyValue(_model, m.Name);
                         m.Value = proValue;
                     }
+                    item.Width = 300;
                     ModelContent.Children.Add(item);
 
                 });

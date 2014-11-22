@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="315">
     <DockPanel>
-        <Label DockPanel.Dock="Left" Content="{Binding Label}" Width="78" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"></Label>
+        <Label DockPanel.Dock="Left" Content="{Binding Label}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"></Label>
         <TextBox  DockPanel.Dock="Right" Name="TextBox_Value" Text="{Binding Value,Mode=TwoWay}" IsEnabled="{Binding IsEnabled}" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="NoWrap"/>
     </DockPanel>
 </local:ModelItemControlBase>

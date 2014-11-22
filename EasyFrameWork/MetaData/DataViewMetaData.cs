@@ -23,7 +23,7 @@ namespace Easy.MetaData
         {
             Init();
         }
-        public void Init()
+        public virtual void Init()
         {
 
             this.Alias = "T0";
@@ -111,8 +111,18 @@ namespace Easy.MetaData
             {
                 IgnoreBase();
             }
+            OnInited();
             this.DataConfigure();
             this.ViewConfigure();
+            OnCustomerInited();
+        }
+        public virtual void OnInited()
+        {
+
+        }
+        public virtual void OnCustomerInited()
+        {
+
         }
         Dictionary<string, HtmlTagBase> _htmlTags = new Dictionary<string, HtmlTagBase>();
         Dictionary<string, PropertyDataInfo> _porpertyDataConfig = new Dictionary<string, PropertyDataInfo>();

@@ -132,6 +132,8 @@ namespace Easy.HTML
                 Attributes.Remove(this.Key);
             }
             tag.DataType = dataType;
+            tag.Grid.Searchable = false;
+            tag.Grid.Visiable = false;
             Attributes.Add(this.Key, tag);
             return tag;
         }

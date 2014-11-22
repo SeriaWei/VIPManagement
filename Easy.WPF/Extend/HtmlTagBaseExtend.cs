@@ -13,7 +13,7 @@ namespace Easy.WPF.Extend
 {
     public static class HtmlTagBaseExtend
     {
-        public static ModelItemControlBase ToModelItemControl(this HtmlTagBase tag)
+        public static ModelItemControlBase ToModelItemControl(this HtmlTagBase tag, bool containsValidation = true)
         {
             ModelItemControlBase item = null;
             if (tag is TextBoxHtmlTag)
@@ -47,10 +47,13 @@ namespace Easy.WPF.Extend
             }
             item.Label = tag.DisplayName;
             item.IsEnabled = !tag.IsReadOnly;
-            tag.Validator.ForEach(v =>
+            if (containsValidation)
             {
-                item.AddValidationRule(new ValidationRuleProvide(v));
-            });
+                tag.Validator.ForEach(v =>
+                {
+                    item.AddValidationRule(new ValidationRuleProvide(v));
+                });
+            }
             return item;
         }
 

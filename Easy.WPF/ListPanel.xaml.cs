@@ -18,6 +18,7 @@ using Easy.HTML.Tags;
 using Easy.RepositoryPattern;
 using Easy.Data;
 using Easy.WPF.Extend;
+using Easy.WPF.Controls;
 
 namespace Easy.WPF
 {
@@ -28,9 +29,15 @@ namespace Easy.WPF
     {
         public static readonly DependencyProperty PageIndexProperty = DependencyProperty.Register("PageIndex", typeof(int), typeof(ListPanel));
         public static readonly DependencyProperty AllPageProperty = DependencyProperty.Register("AllPage", typeof(int), typeof(ListPanel));
+
+        private readonly Button _searchButton;
         public ListPanel()
         {
             InitializeComponent();
+            _searchButton = new Button();
+            _searchButton.Template = FindResource("ButtonIcon") as ControlTemplate;
+            _searchButton.DataContext = new { Source = new Uri("/Easy.WPF;component/Images/search.png", UriKind.Relative) };
+            _searchButton.ToolTip = "搜索";
         }
         protected override void OnInitialized(EventArgs e)
         {
@@ -70,17 +77,18 @@ namespace Easy.WPF
         {
             ModelType = typeof(T);
             Pagination page = new Pagination { PageIndex = 0 };
-            this.DataSource = service.Get(new DataFilter(), page);
-            PageIndex = page.PageIndexReal;
-            AllPage = page.AllPage;
+            var search = new Func<DataFilter, Pagination, IEnumerable<T>>((filter, p) =>
+            {
+                var result = service.Get(filter, p);
+                PageIndex = p.PageIndexReal;
+                AllPage = p.AllPage;
+                return result;
+            });
             Button_Prev.Click += (s, e) =>
             {
                 if (PageIndex > 1)
                 {
-                    Pagination pagin = new Pagination { PageIndex = PageIndex - 2 };
-                    this.DataSource = service.Get(new DataFilter(), pagin);
-                    PageIndex = pagin.PageIndexReal;
-                    AllPage = page.AllPage;
+                    this.DataSource = search.Invoke(GetFilter(), new Pagination { PageIndex = PageIndex - 2 });
                 }
 
             };
@@ -88,29 +96,49 @@ namespace Easy.WPF
             {
                 if (PageIndex < AllPage)
                 {
-                    Pagination pagin = new Pagination { PageIndex = PageIndex };
-                    this.DataSource = service.Get(new DataFilter(), pagin);
-                    PageIndex = pagin.PageIndexReal;
-                    AllPage = page.AllPage;
+                    this.DataSource = search.Invoke(GetFilter(), new Pagination { PageIndex = PageIndex });
                 }
             };
+            _searchButton.Click += (s, e) =>
+            {
+                this.DataSource = search.Invoke(GetFilter(), new Pagination { PageIndex = 0 });
+            };
+
+            this.DataSource = search.Invoke(new DataFilter(), new Pagination { });
             this.DataContext = this;
         }
+        private DataFilter GetFilter()
+        {
+            DataFilter filter = new DataFilter();
+            var attribute = Easy.MetaData.DataConfigureAttribute.GetAttribute(this.ModelType);
 
+            foreach (UIElement item in stackPanel_Search.Children)
+            {
+                if (item is ModelItemControlBase)
+                {
+                    var control = item as ModelItemControlBase;
+                    if (control.Value != null && control.Value.ToString() != string.Empty)
+                    {
+                        filter.Where(attribute.MetaData.PropertyDataConfig[control.Name].ColumnName, OperatorType.Equal, control.Value);
+                    }
+                }
+            }
+            return filter;
+        }
         void initPanel()
         {
-
             var attribute = Easy.MetaData.DataConfigureAttribute.GetAttribute(this.ModelType);
             if (attribute != null)
             {
                 var tags = attribute.GetHtmlTags(true).OrderBy(m => m.OrderIndex);
                 tags.Each(m =>
                 {
-                    if (m.Grid.Searchable)
+                    if (!m.IsHidden && m.Grid.Searchable && m.Grid.Visiable)
                     {
-                        var control = m.ToModelItemControl();
+                        var control = m.ToModelItemControl(false);
                         control.Width = 200;
                         control.Margin = new Thickness(2);
+                        control.IsEnabled = true;                        
                         stackPanel_Search.Children.Add(control);
                     }
                     dataGrid.Columns.Add(m.ToDataGridBoundColumn());
@@ -158,6 +186,7 @@ namespace Easy.WPF
                     dataGrid.Columns.Add(column);
                 });
             }
+            stackPanel_Search.Children.Add(_searchButton);
         }
     }
 

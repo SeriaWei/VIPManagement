@@ -11,13 +11,14 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0">
+        <DockPanel Grid.Row="0" Margin="2">
             <StackPanel DockPanel.Dock="Left" Name="stackPanel_Search" Orientation="Horizontal"></StackPanel>
-            <StackPanel DockPanel.Dock="Right" Name="stackPanel_ToolBar" Orientation="Horizontal">
+            <StackPanel DockPanel.Dock="Right" Name="stackPanel_ToolBar" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button>dd</Button>
+                <Button>dd2</Button>
             </StackPanel>
         </DockPanel>
-        <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False"></DataGrid>
+        <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False"></DataGrid>
         <Grid Grid.Row="2" Name="grid_page">
             <Button x:Name="Button_Prev" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="25"  Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
                 <Image Source="Images/prev.png" Width="15" Height="15"></Image>
