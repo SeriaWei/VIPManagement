@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="VIPManagement.MainWindow"
-        Title="MainWindow" Height="600" Width="781" MinWidth="781" MinHeight="500" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="700" Width="910" MinWidth="781" MinHeight="500" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Image x:Key="ImageAccount" Source="Images/users.png"/>
         <Image x:Key="ImageCart" Source="Images/account.png"/>
@@ -11,6 +11,7 @@
         <Image x:Key="ImageCash" Source="Images/cash.png"/>
         <Image x:Key="ImageProduct" Source="Images/product.png"/>
         <Image x:Key="ImageSetting" Source="Images/settings.png"/>
+        <Image x:Key="ImageReport" Source="Images/report.png"/>
         <Style x:Key="Button_MainStyle" TargetType="{x:Type Button}">
         	<Setter Property="BorderThickness" Value="1"/>
         	<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -39,8 +40,7 @@
         			</ControlTemplate>
         		</Setter.Value>
         	</Setter>
-        </Style>
-        
+        </Style>        
     </Window.Resources>
     <Window.Background>
         <ImageBrush ImageSource="Images/HisBackGround.png"/>
@@ -67,6 +67,10 @@
 
                 <Button Content="商 品"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageProduct}" Foreground="White" Margin="10"/>
+
+                <Button Content="报 表"   Height="86" Width="105"
+					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageReport}" Foreground="White" Margin="10"/>
+                
                 <Button Content="设 置"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageSetting}" Foreground="White" Margin="10"/>
             </VirtualizingStackPanel>
@@ -75,7 +79,7 @@
         
         <!---->
         <DockPanel Name="dockPanel_Main" Grid.Row="1">
-            
+           <TextBox TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
         </DockPanel>
 
 	</Grid>

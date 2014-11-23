@@ -30,6 +30,10 @@ namespace Easy.WPF
         public static readonly DependencyProperty PageIndexProperty = DependencyProperty.Register("PageIndex", typeof(int), typeof(ListPanel));
         public static readonly DependencyProperty AllPageProperty = DependencyProperty.Register("AllPage", typeof(int), typeof(ListPanel));
 
+        public event RoutedEventHandler EditClick;
+
+        private Action ReloadData;
+
         private readonly Button _searchButton;
         public ListPanel()
         {
@@ -37,11 +41,21 @@ namespace Easy.WPF
             _searchButton = new Button();
             _searchButton.Template = FindResource("ButtonIcon") as ControlTemplate;
             _searchButton.DataContext = new { Source = new Uri("/Easy.WPF;component/Images/search.png", UriKind.Relative) };
-            _searchButton.ToolTip = "搜索";
+            _searchButton.Content = _searchButton.ToolTip = "搜索";
+            _searchButton.Foreground = new SolidColorBrush(Colors.White);
         }
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
+            CommandBinding binding = new CommandBinding(ApplicationCommands.Open, EditCommandExcuted);
+            this.CommandBindings.Add(binding);
+        }
+        void EditCommandExcuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (EditClick != null)
+            {
+                EditClick((e.OriginalSource as Button).DataContext, e);
+            }
         }
         Type _modelType;
         public Type ModelType
@@ -53,16 +67,7 @@ namespace Easy.WPF
                 initPanel();
             }
         }
-        IEnumerable _dataSource;
-        public IEnumerable DataSource
-        {
-            get { return _dataSource; }
-            private set
-            {
-                _dataSource = value;
-                dataGrid.ItemsSource = _dataSource;
-            }
-        }
+        
         public int PageIndex
         {
             get { return (int)GetValue(PageIndexProperty); }
@@ -77,18 +82,17 @@ namespace Easy.WPF
         {
             ModelType = typeof(T);
             Pagination page = new Pagination { PageIndex = 0 };
-            var search = new Func<DataFilter, Pagination, IEnumerable<T>>((filter, p) =>
+            var search = new Action<DataFilter, Pagination>((filter, p) =>
             {
-                var result = service.Get(filter, p);
+                this.dataGrid.ItemsSource = service.Get(filter, p); ;
                 PageIndex = p.PageIndexReal;
                 AllPage = p.AllPage;
-                return result;
             });
             Button_Prev.Click += (s, e) =>
             {
                 if (PageIndex > 1)
                 {
-                    this.DataSource = search.Invoke(GetFilter(), new Pagination { PageIndex = PageIndex - 2 });
+                    search.Invoke(GetFilter(), new Pagination { PageIndex = PageIndex - 2 });
                 }
 
             };
@@ -96,17 +100,21 @@ namespace Easy.WPF
             {
                 if (PageIndex < AllPage)
                 {
-                    this.DataSource = search.Invoke(GetFilter(), new Pagination { PageIndex = PageIndex });
+                    search.Invoke(GetFilter(), new Pagination { PageIndex = PageIndex });
                 }
             };
             _searchButton.Click += (s, e) =>
             {
-                this.DataSource = search.Invoke(GetFilter(), new Pagination { PageIndex = 0 });
+                search.Invoke(GetFilter(), new Pagination { PageIndex = 0 });
             };
-
-            this.DataSource = search.Invoke(new DataFilter(), new Pagination { });
+            ReloadData = new Action(() =>
+            {
+                search.Invoke(GetFilter(), new Pagination { PageIndex = PageIndex - 1 });
+            });
+            search.Invoke(new DataFilter(), new Pagination { });
             this.DataContext = this;
         }
+
         private DataFilter GetFilter()
         {
             DataFilter filter = new DataFilter();
@@ -136,9 +144,12 @@ namespace Easy.WPF
                     if (!m.IsHidden && m.Grid.Searchable && m.Grid.Visiable)
                     {
                         var control = m.ToModelItemControl(false);
-                        control.Width = 200;
+                        control.Width = 150;
                         control.Margin = new Thickness(2);
-                        control.IsEnabled = true;                        
+                        control.IsEnabled = true;
+                        Binding bind = new Binding("Foreground");
+                        bind.Source = this;
+                        control.SetBinding(ModelItemControlBase.ForegroundProperty, bind);
                         stackPanel_Search.Children.Add(control);
                     }
                     dataGrid.Columns.Add(m.ToDataGridBoundColumn());
@@ -187,6 +198,15 @@ namespace Easy.WPF
                 });
             }
             stackPanel_Search.Children.Add(_searchButton);
+        }
+        public void AddToToolBar(UIElement ele)
+        {
+            stackPanel_ToolBar.Children.Add(ele);
+        }
+
+        public void Reload()
+        {
+            ReloadData.Invoke();
         }
     }
 

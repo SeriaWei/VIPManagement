@@ -15,11 +15,15 @@ namespace Easy.WPF.ValueConverter
             {
                 return dict[value.ToString()];
             }
-            return string.Empty;
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            if (value is KeyValuePair<string, string>)
+            {
+                return ((KeyValuePair<string, string>)value).Key;
+            }
             return value;
         }
     }

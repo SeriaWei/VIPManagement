@@ -22,15 +22,42 @@ namespace VIP.Core.Customer
     /// </summary>
     public partial class CustomerPanel : UserControl
     {
-        Easy.Data.Pagination page;
+        ICustomerService service;
         public CustomerPanel()
         {
+            service = Loader.CreateInstance<ICustomerService>();
             InitializeComponent();
         }
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            listPanel.Service(Loader.CreateInstance<ICustomerService>());
+            listPanel.Service(service);
+            listPanel.EditClick += (s, ee) =>
+            {
+                var wind = new ModelWindow();
+                wind.Service(service);
+                wind.Model = s;
+                if (wind.ShowDialog() ?? false)
+                {
+                    listPanel.Reload();
+                }
+            };
+            Button add = new Button();
+            add.Template = FindResource("ButtonIcon") as ControlTemplate;
+            add.DataContext = new { Source = new Uri("/VIP.Core;component/Images/plus.png", UriKind.Relative) };
+            add.Content = "添加";
+            add.Foreground = new SolidColorBrush(Colors.White);
+            add.Click += (s, ee) =>
+            {
+                var wind = new ModelWindow();
+                wind.Service(service);
+                wind.ModelType = typeof(CustomerEntity);
+                if (wind.ShowDialog() ?? false)
+                {
+                    listPanel.Reload();
+                }
+            };
+            listPanel.AddToToolBar(add);
         }
     }
 }

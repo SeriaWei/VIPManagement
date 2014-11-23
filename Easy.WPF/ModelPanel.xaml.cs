@@ -35,6 +35,10 @@ namespace Easy.WPF
             get { return _modelType; }
             set
             {
+                if (_model == null)
+                {
+                    _model = Loader.CreateInstance(value);
+                }
                 _modelType = value;
                 initPanel();
             }
@@ -90,9 +94,12 @@ namespace Easy.WPF
                     if (_model != null)
                     {
                         var proValue = Easy.Reflection.ClassAction.GetObjPropertyValue(_model, m.Name);
-                        m.Value = proValue;
+                        item.Value = proValue;
                     }
                     item.Width = 300;
+                    Binding bind = new Binding("Foreground");
+                    bind.Source = this;
+                    item.SetBinding(ModelItemControlBase.ForegroundProperty, bind);
                     ModelContent.Children.Add(item);
 
                 });

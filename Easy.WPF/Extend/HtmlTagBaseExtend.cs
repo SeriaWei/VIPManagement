@@ -16,8 +16,27 @@ namespace Easy.WPF.Extend
         public static ModelItemControlBase ToModelItemControl(this HtmlTagBase tag, bool containsValidation = true)
         {
             ModelItemControlBase item = null;
-            if (tag is TextBoxHtmlTag)
+            if (tag is CheckBoxHtmlTag)
             {
+                item = new CheckBoxItem();
+            }
+            else if (tag is HiddenHtmlTag)
+            {
+                item = new Normal();
+                item.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else if (tag is DropDownListHtmlTag)
+            {
+                item = new DropDownList();
+                (item as DropDownList).SetOptionItem((tag as DropDownListHtmlTag).OptionItems);
+            }
+            else if (tag is MutiLineTextBoxHtmlTag)
+            {
+                item = new TextArea();
+            }
+            else
+            {
+                item = new Normal();
                 if (tag.DataType.Name == "DateTime")
                 {
                     item = new Normal_Date();
@@ -26,19 +45,6 @@ namespace Easy.WPF.Extend
                 {
                     item = new Normal();
                 }
-            }
-            else if (tag is Easy.HTML.Tags.CheckBoxHtmlTag)
-            {
-                item = new CheckBoxItem();
-            }
-            else if (tag is Easy.HTML.Tags.HiddenHtmlTag)
-            {
-                item = new Normal();
-                item.Visibility = System.Windows.Visibility.Collapsed;
-            }
-            else
-            {
-                item = new Normal();
             }
             item.Name = tag.Name;
             if (tag.IsHidden)

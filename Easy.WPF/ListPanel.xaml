@@ -5,6 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="EditColumnTemplate">
+            <Button Template="{DynamicResource ButtonIconOnly}" Command="ApplicationCommands.Open" ToolTip="编辑">
+                <Image Source="Images/edit.png" Width="15" Height="15" />
+            </Button>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
@@ -14,11 +21,14 @@
         <DockPanel Grid.Row="0" Margin="2">
             <StackPanel DockPanel.Dock="Left" Name="stackPanel_Search" Orientation="Horizontal"></StackPanel>
             <StackPanel DockPanel.Dock="Right" Name="stackPanel_ToolBar" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button>dd</Button>
-                <Button>dd2</Button>
+                
             </StackPanel>
         </DockPanel>
-        <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False"></DataGrid>
+        <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" SelectionUnit="Cell">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn CellTemplate="{StaticResource EditColumnTemplate}" IsReadOnly="True"></DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
         <Grid Grid.Row="2" Name="grid_page">
             <Button x:Name="Button_Prev" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="25"  Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
                 <Image Source="Images/prev.png" Width="15" Height="15"></Image>

@@ -35,12 +35,17 @@ namespace Easy.WPF.Controls
                 Source = this.DataContext,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 NotifyOnValidationError = true,
+                Converter = GetValueConverter()
             };
             _customerValueElement.SetBinding(_customerValueProperty, DataBinding);
 
         }
         public abstract FrameworkElement GetElement();
         public abstract DependencyProperty GetPeoperty();
+        public virtual IValueConverter GetValueConverter()
+        {
+            return null;
+        }
         public virtual ReadOnlyObservableCollection<ValidationError> GetValidateErrors()
         {
             if (_customerValueElement.GetBindingExpression(_customerValueProperty).ValidateWithoutUpdate())
