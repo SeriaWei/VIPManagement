@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VIPManagement", "VIPManagement\VIPManagement.csproj", "{96836DCA-186B-4D5D-B79C-B2B77CC82C34}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VIP.Core", "VIP.Core\VIP.Core.csproj", "{67C01BDA-5C04-4A0C-BC13-4375DF0049A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Easy.WPF", "Easy.WPF\Easy.WPF.csproj", "{9D3A1D8D-1C3D-49BF-B236-41D058158BB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VIP.DataMigration", "VIP.DataMigration\VIP.DataMigration.csproj", "{C7A1FC15-61D5-496B-965B-3C5B54C25B3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9D3A1D8D-1C3D-49BF-B236-41D058158BB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D3A1D8D-1C3D-49BF-B236-41D058158BB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D3A1D8D-1C3D-49BF-B236-41D058158BB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7A1FC15-61D5-496B-965B-3C5B54C25B3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7A1FC15-61D5-496B-965B-3C5B54C25B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7A1FC15-61D5-496B-965B-3C5B54C25B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7A1FC15-61D5-496B-965B-3C5B54C25B3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
