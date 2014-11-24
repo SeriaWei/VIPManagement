@@ -21,18 +21,6 @@ namespace Easy.MetaData
         public DataConfigureAttribute(Type MetaDataType)
         {
             IDataViewMetaData metaData = Activator.CreateInstance(MetaDataType) as IDataViewMetaData;
-            //HTML标签的多语言
-            Dictionary<string, string> lan = new Dictionary<string, string>();
-            foreach (var item in metaData.HtmlTags)
-            {
-                if (string.IsNullOrEmpty(item.Value.DisplayName))
-                    lan.Add(item.Key, item.Value.ModelType.Name + "@" + item.Key);
-            }
-            lan = Localization.InitLan(lan);
-            foreach (var item in lan)
-            {
-                metaData.HtmlTags[item.Key].DisplayName = item.Value;
-            }
             this.MetaData = metaData;
         }
         /// <summary>
@@ -160,5 +148,6 @@ namespace Easy.MetaData
             }
             return attribute;
         }
+
     }
 }

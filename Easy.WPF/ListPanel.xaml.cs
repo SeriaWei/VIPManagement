@@ -13,6 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Easy.Extend;
+using Easy.WPF.ValueConverter;
+using Easy.HTML.Tags;
+using Easy.RepositoryPattern;
+using Easy.Data;
+using Easy.WPF.Extend;
+using Easy.WPF.Controls;
 
 namespace Easy.WPF
 {
@@ -21,65 +27,132 @@ namespace Easy.WPF
     /// </summary>
     public partial class ListPanel : UserControl
     {
+        public static readonly DependencyProperty PageIndexProperty = DependencyProperty.Register("PageIndex", typeof(int), typeof(ListPanel));
+        public static readonly DependencyProperty AllPageProperty = DependencyProperty.Register("AllPage", typeof(int), typeof(ListPanel));
+
+        public event RoutedEventHandler EditClick;
+
+        private Action ReloadData;
+
+        private readonly Button _searchButton;
         public ListPanel()
         {
             InitializeComponent();
+            _searchButton = new Button();
+            _searchButton.Template = FindResource("ButtonIcon") as ControlTemplate;
+            _searchButton.DataContext = new { Source = new Uri("/Easy.WPF;component/Images/search.png", UriKind.Relative) };
+            _searchButton.Content = _searchButton.ToolTip = "搜索";
+            _searchButton.Foreground = new SolidColorBrush(Colors.White);
+        }
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            CommandBinding binding = new CommandBinding(ApplicationCommands.Open, EditCommandExcuted);
+            this.CommandBindings.Add(binding);
+        }
+        void EditCommandExcuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (EditClick != null)
+            {
+                EditClick((e.OriginalSource as Button).DataContext, e);
+            }
         }
         Type _modelType;
         public Type ModelType
         {
             get { return _modelType; }
-            set
+            private set
             {
                 _modelType = value;
                 initPanel();
             }
         }
-        IEnumerable _dataSource;
-        public IEnumerable DataSource
+        
+        public int PageIndex
         {
-            get { return _dataSource; }
-            set
+            get { return (int)GetValue(PageIndexProperty); }
+            set { SetValue(PageIndexProperty, value); }
+        }
+        public int AllPage
+        {
+            get { return (int)GetValue(AllPageProperty); }
+            set { SetValue(AllPageProperty, value); }
+        }
+        public void Service<T>(IServiceBase<T> service) where T : class
+        {
+            ModelType = typeof(T);
+            Pagination page = new Pagination { PageIndex = 0 };
+            var search = new Action<DataFilter, Pagination>((filter, p) =>
             {
-                _dataSource = value;
-                dataGrid.ItemsSource = _dataSource;
-            }
+                this.dataGrid.ItemsSource = service.Get(filter, p); ;
+                PageIndex = p.PageIndexReal;
+                AllPage = p.AllPage;
+            });
+            Button_Prev.Click += (s, e) =>
+            {
+                if (PageIndex > 1)
+                {
+                    search.Invoke(GetFilter(), new Pagination { PageIndex = PageIndex - 2 });
+                }
+
+            };
+            Button_Next.Click += (s, e) =>
+            {
+                if (PageIndex < AllPage)
+                {
+                    search.Invoke(GetFilter(), new Pagination { PageIndex = PageIndex });
+                }
+            };
+            _searchButton.Click += (s, e) =>
+            {
+                search.Invoke(GetFilter(), new Pagination { PageIndex = 0 });
+            };
+            ReloadData = new Action(() =>
+            {
+                search.Invoke(GetFilter(), new Pagination { PageIndex = PageIndex - 1 });
+            });
+            search.Invoke(new DataFilter(), new Pagination { });
+            this.DataContext = this;
         }
 
+        private DataFilter GetFilter()
+        {
+            DataFilter filter = new DataFilter();
+            var attribute = Easy.MetaData.DataConfigureAttribute.GetAttribute(this.ModelType);
+
+            foreach (UIElement item in stackPanel_Search.Children)
+            {
+                if (item is ModelItemControlBase)
+                {
+                    var control = item as ModelItemControlBase;
+                    if (control.Value != null && control.Value.ToString() != string.Empty)
+                    {
+                        filter.Where(attribute.MetaData.PropertyDataConfig[control.Name].ColumnName, OperatorType.Equal, control.Value);
+                    }
+                }
+            }
+            return filter;
+        }
         void initPanel()
         {
-
             var attribute = Easy.MetaData.DataConfigureAttribute.GetAttribute(this.ModelType);
             if (attribute != null)
             {
                 var tags = attribute.GetHtmlTags(true).OrderBy(m => m.OrderIndex);
                 tags.Each(m =>
                 {
-                    DataGridBoundColumn column = null;
-                    if (m is Easy.HTML.Tags.TextBoxHtmlTag)
+                    if (!m.IsHidden && m.Grid.Searchable && m.Grid.Visiable)
                     {
-                        column = new DataGridTextColumn();
+                        var control = m.ToModelItemControl(false);
+                        control.Width = 150;
+                        control.Margin = new Thickness(2);
+                        control.IsEnabled = true;
+                        Binding bind = new Binding("Foreground");
+                        bind.Source = this;
+                        control.SetBinding(ModelItemControlBase.ForegroundProperty, bind);
+                        stackPanel_Search.Children.Add(control);
                     }
-                    else if (m is Easy.HTML.Tags.CheckBoxHtmlTag)
-                    {
-                        column = new DataGridCheckBoxColumn();
-                    }
-                    if (column != null)
-                    {
-                        if (!m.Grid.Visiable)
-                        {
-                            column.Visibility = System.Windows.Visibility.Collapsed;
-                        }
-                        column.Header = m.DisplayName;
-                        Binding binding = new Binding(m.Name);
-                        if (!m.ValueFormat.IsNullOrEmpty())
-                        {
-                            binding.StringFormat = m.ValueFormat;
-                        }
-                        column.Binding = binding;
-                        column.IsReadOnly = true;
-                        dataGrid.Columns.Add(column);
-                    }
+                    dataGrid.Columns.Add(m.ToDataGridBoundColumn());
                 });
             }
             else
@@ -121,10 +194,21 @@ namespace Easy.WPF
                         default:
                             break;
                     }
-                    object proValue = null;
                     dataGrid.Columns.Add(column);
                 });
             }
+            stackPanel_Search.Children.Add(_searchButton);
+        }
+        public void AddToToolBar(UIElement ele)
+        {
+            stackPanel_ToolBar.Children.Add(ele);
+        }
+
+        public void Reload()
+        {
+            ReloadData.Invoke();
         }
     }
+
+
 }

@@ -38,13 +38,12 @@ namespace VIP.Core.Customer
         public DateTime? LastActivedDate { get; set; }
         public DateTime? RegistDate { get; set; }
     }
-    class CustomerEntityMetaData : DataViewMetaData<CustomerEntity>
+    class CustomerEntityMetaData : ViewMetaData<CustomerEntity>
     {
         protected override void DataConfigure()
         {
             DataTable("Customer");
             DataConfig(m => m.ID).AsPrimaryKey();
-            DataConfig(m => m.ActionType).Ignore();
             DataConfig(m => m.Age).Ignore();
         }
 
@@ -52,10 +51,19 @@ namespace VIP.Core.Customer
         {
             ViewConfig(m => m.ID).AsHidden();
             ViewConfig(m => m.Title).AsHidden();
-            ViewConfig(m => m.FirstName).AsTextBox().Required();
-            ViewConfig(m => m.LastName).AsTextBox().Required();
-            ViewConfig(m => m.LastActivedDate).AsTextBox().ReadOnly();
-            ViewConfig(m => m.Age).AsTextBox().ReadOnly();
+            ViewConfig(m => m.LastName).AsHidden();
+            ViewConfig(m => m.EnglishName).AsHidden();
+            ViewConfig(m => m.FirstName).AsTextBox().Required().SearchAble().Order(1);
+            ViewConfig(m => m.CardID).AsTextBox().Required().SearchAble().Order(2);
+            ViewConfig(m => m.MobilePhone).AsTextBox().Required().SearchAble().Order(3);
+            ViewConfig(m => m.RegistDate).AsTextBox().SearchAble(false).Order(4).ReadOnly();
+            ViewConfig(m => m.LastActivedDate).AsTextBox().Order(5).FormatAsDate().SearchAble(false);
+            ViewConfig(m => m.Expendamount).AsTextBox().ReadOnly().Order(6).SearchAble(false);
+            ViewConfig(m => m.Surplus).AsTextBox().ReadOnly().Order(7).SearchAble(false);
+            ViewConfig(m => m.Integral).AsTextBox().ReadOnly().Order(8).SearchAble(false);
+            ViewConfig(m => m.SurplusIntegral).AsTextBox().ReadOnly().Order(9).SearchAble(false);
+            ViewConfig(m => m.ExchangedIntegral).AsTextBox().ReadOnly().Order(10).SearchAble(false);
+           
         }
     }
 

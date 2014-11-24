@@ -21,7 +21,7 @@ namespace Easy.HTML.Tags
             if (val != null && DataType.Name == "DateTime")
             {
                 DateTime time = Convert.ToDateTime(val);
-                Value = time.ToString(DateFormat);
+                Value = time.ToString(ValueFormat);
             }
             else
             {
@@ -29,15 +29,14 @@ namespace Easy.HTML.Tags
             }
 
         }
-        public string DateFormat { get; set; }
         /// <summary>
         /// 只显示日期，格式为：年/月/日
         /// </summary>
         /// <returns></returns>
         public TextBoxHtmlTag FormatAsDate()
         {
-            this.DateFormat = "yyyy/MM/dd";
-            this.AddProperty("DateFormat", this.DateFormat);
+            this.ValueFormat = "yyyy/MM/dd";
+            this.AddProperty("DateFormat", this.ValueFormat);
             this.AddProperty("ValueType", "Date");
             this.AddClass("Date");
             return this;
@@ -48,8 +47,8 @@ namespace Easy.HTML.Tags
         /// <returns></returns>
         public TextBoxHtmlTag FormatAsDateTime()
         {
-            this.DateFormat = "yyyy/MM/dd H:mm";
-            this.AddProperty("DateFormat", this.DateFormat);
+            this.ValueFormat = "yyyy/MM/dd H:mm";
+            this.AddProperty("DateFormat", this.ValueFormat);
             this.AddProperty("ValueType", "Date");
             this.AddClass("Date");
             return this;
@@ -61,7 +60,7 @@ namespace Easy.HTML.Tags
         /// <returns></returns>
         public TextBoxHtmlTag FormatDate(string format)
         {
-            this.DateFormat = format;
+            this.ValueFormat = format;
             this.AddProperty("DateFormat", format);
             this.AddProperty("ValueType", "Date");
             this.AddClass("Date");

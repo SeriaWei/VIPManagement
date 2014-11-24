@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:Easy.WPF.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="315">
-    <Grid Margin="15,2">
-        <Label Content="{Binding Label}" Width="78" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"></Label>
-        <CheckBox Name="CheckBox_Value" IsChecked="{Binding Value,Mode=TwoWay}" IsEnabled="{Binding IsEnabled}" Margin="85,0,0,0" VerticalAlignment="Center" Width="200"/>
-    </Grid>
+    <DockPanel>
+        <Label Foreground="{Binding Foreground}" DockPanel.Dock="Left" Content="{Binding Label}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"></Label>
+        <CheckBox DockPanel.Dock="Right" Name="CheckBox_Value" IsEnabled="{Binding IsEnabled}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+    </DockPanel>
 </local:ModelItemControlBase>

@@ -17,7 +17,7 @@ namespace Easy.WPF.Controls
         private DependencyProperty _customerValueProperty;
         public ModelItemControlBase()
         {
-
+            this.Margin = new Thickness(15, 2, 15, 2);
         }
         public void AddValidationRule(ValidationRule rule)
         {
@@ -35,12 +35,17 @@ namespace Easy.WPF.Controls
                 Source = this.DataContext,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 NotifyOnValidationError = true,
+                Converter = GetValueConverter()
             };
             _customerValueElement.SetBinding(_customerValueProperty, DataBinding);
 
         }
         public abstract FrameworkElement GetElement();
         public abstract DependencyProperty GetPeoperty();
+        public virtual IValueConverter GetValueConverter()
+        {
+            return null;
+        }
         public virtual ReadOnlyObservableCollection<ValidationError> GetValidateErrors()
         {
             if (_customerValueElement.GetBindingExpression(_customerValueProperty).ValidateWithoutUpdate())
@@ -53,6 +58,17 @@ namespace Easy.WPF.Controls
         public static readonly DependencyProperty LabelProperty = DependencyProperty.Register("Label", typeof(string), typeof(ModelItemControlBase));
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(object), typeof(ModelItemControlBase));
+
+        public string Label
+        {
+            get { return (string)GetValue(LabelProperty); }
+            set { SetValue(LabelProperty, value); }
+        }
+        public object Value
+        {
+            get { return GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
+        }
 
     }
 }

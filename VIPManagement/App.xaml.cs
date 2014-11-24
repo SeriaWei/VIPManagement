@@ -24,6 +24,8 @@ namespace VIPManagement
                     m.GetTypes().Where(t => moduleType.IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface).Each(t => (Easy.Loader.CreateInstance(t) as Easy.IOCAdapter.IModule).Load());
                 }
             });
+            new Easy.Modules.DataDictionary.DataDicttionaryModule().Load();
+            new Easy.Modules.MutiLanguage.MutiLanguageModule().Load();
         }
     }
 }

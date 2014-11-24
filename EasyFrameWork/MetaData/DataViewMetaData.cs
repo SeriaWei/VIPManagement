@@ -23,7 +23,7 @@ namespace Easy.MetaData
         {
             Init();
         }
-        public void Init()
+        public virtual void Init()
         {
 
             this.Alias = "T0";
@@ -111,8 +111,18 @@ namespace Easy.MetaData
             {
                 IgnoreBase();
             }
+            OnInited();
             this.DataConfigure();
             this.ViewConfigure();
+            OnCustomerInited();
+        }
+        public virtual void OnInited()
+        {
+
+        }
+        public virtual void OnCustomerInited()
+        {
+
         }
         Dictionary<string, HtmlTagBase> _htmlTags = new Dictionary<string, HtmlTagBase>();
         Dictionary<string, PropertyDataInfo> _porpertyDataConfig = new Dictionary<string, PropertyDataInfo>();
@@ -286,6 +296,21 @@ namespace Easy.MetaData
             {
                 DataConfig(item.Name).Ignore();
                 ViewConfig(item.Name).AsHidden();
+            }
+        }
+
+
+        public virtual void InitDisplayName()
+        {
+            Dictionary<string, string> lan = new Dictionary<string, string>();
+            foreach (var item in this.HtmlTags)
+            {
+                lan.Add(item.Key, item.Value.ModelType.Name + "@" + item.Key);
+            }
+            lan = Localization.InitLan(lan);
+            foreach (var item in lan)
+            {
+                this.HtmlTags[item.Key].DisplayName = item.Value;
             }
         }
     }

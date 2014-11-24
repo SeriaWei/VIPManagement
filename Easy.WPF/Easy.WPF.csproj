@@ -50,11 +50,23 @@
   <ItemGroup>
     <Compile Include="Command\UICommand.cs" />
     <Compile Include="Command\UICommandBinding.cs" />
+    <Compile Include="Controls\DropDownList.xaml.cs">
+      <DependentUpon>DropDownList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextArea.xaml.cs">
+      <DependentUpon>TextArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extend\HtmlTagBaseExtend.cs" />
     <Compile Include="ListPanel.xaml.cs">
       <DependentUpon>ListPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValidationRuleProvide.cs" />
+    <Compile Include="ValueConverter\DictionaryValueConverter.cs" />
     <Page Include="Controls\CheckBoxItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DropDownList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -63,6 +75,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Normal_Date.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TextArea.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -118,6 +134,24 @@
       <Project>{edb1baa7-ec61-4292-bbe5-3bc39eb171e4}</Project>
       <Name>Easy</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\prev.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\users.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,31 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:WPF="clr-namespace:Easy.WPF;assembly=Easy.WPF" x:Class="VIP.Core.ModelWindow"
+        Title="ModelWindow" Height="520" Width="695" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Image x:Key="ImageSave" Source="Images/save.png"></Image>
+        <Image x:Key="ImageCancel" Source="Images/cancel.png"></Image>
+    </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF3DACC6" Offset="0"/>
+            <GradientStop Color="#FF53D0EE" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button Command="ApplicationCommands.Save" Margin="2,2,10,2" Template="{DynamicResource ButtonIcon}" DataContext="{StaticResource ImageSave}" Content="保存" Height="25" Foreground="White"></Button>
+            <Button Command="ApplicationCommands.Close" Margin="10,2,2,2" Template="{DynamicResource ButtonIcon}" DataContext="{StaticResource ImageCancel}" Content="取消" Height="25" Foreground="White"></Button>
+        </StackPanel>
+        <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="#FF1B859C">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                <WPF:ModelPanel Foreground="White" Name="modelPanel" Margin="0" />
+            </ScrollViewer>            
+        </Border>
+    </Grid>
+</Window>

@@ -22,31 +22,42 @@ namespace VIP.Core.Customer
     /// </summary>
     public partial class CustomerPanel : UserControl
     {
-        Easy.Data.Pagination page;
+        ICustomerService service;
         public CustomerPanel()
         {
+            service = Loader.CreateInstance<ICustomerService>();
             InitializeComponent();
         }
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            page = new Easy.Data.Pagination { PageIndex = 0, PageSize = 20 };
-            ICustomerService service = Loader.CreateInstance<ICustomerService>();
-            listPanel.ModelType = typeof(CustomerEntity);
-            listPanel.DataSource = service.Get(new Easy.Data.DataFilter(), page);
-            paginal.SetPage(page);
-            paginal.PrevPageClick += (p) =>
+            listPanel.Service(service);
+            listPanel.EditClick += (s, ee) =>
             {
-                page.PageIndex = p;
-                listPanel.DataSource = service.Get(new Easy.Data.DataFilter(), page);
-                paginal.SetPage(page);
+                var wind = new ModelWindow();
+                wind.Service(service);
+                wind.Model = s;
+                if (wind.ShowDialog() ?? false)
+                {
+                    listPanel.Reload();
+                }
             };
-            paginal.NextPageClick += (p) =>
+            Button add = new Button();
+            add.Template = FindResource("ButtonIcon") as ControlTemplate;
+            add.DataContext = new { Source = new Uri("/VIP.Core;component/Images/plus.png", UriKind.Relative) };
+            add.Content = "添加";
+            add.Foreground = new SolidColorBrush(Colors.White);
+            add.Click += (s, ee) =>
             {
-                page.PageIndex = p;
-                listPanel.DataSource = service.Get(new Easy.Data.DataFilter(), page);
-                paginal.SetPage(page);
+                var wind = new ModelWindow();
+                wind.Service(service);
+                wind.ModelType = typeof(CustomerEntity);
+                if (wind.ShowDialog() ?? false)
+                {
+                    listPanel.Reload();
+                }
             };
+            listPanel.AddToToolBar(add);
         }
     }
 }
