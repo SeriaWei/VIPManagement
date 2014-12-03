@@ -63,6 +63,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Card\CardEntity.cs" />
     <Compile Include="Command\TopMenuCommand.cs" />
     <Compile Include="Customer\CustomerEntity.cs" />
     <Compile Include="Customer\CustomerModule.cs" />

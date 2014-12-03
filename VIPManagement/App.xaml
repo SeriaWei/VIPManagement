@@ -125,9 +125,9 @@
                         <ControlTemplate>
                             <DockPanel LastChildFill="True">
                                 <TextBlock Foreground="Red" FontWeight="Bold"
-                                               DockPanel.Dock="Top"
+                                               DockPanel.Dock="Left"
                                                VerticalAlignment="Center"></TextBlock>
-                                <Label DockPanel.Dock="Bottom" Foreground="Red" Background="Yellow" Content="{Binding ElementName=adornerPlaceholder,Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"></Label>
+                                <Label DockPanel.Dock="Right" Foreground="Red" Content="{Binding ElementName=adornerPlaceholder,Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"></Label>
                                 <Border
                                         BorderBrush="Red"
                                         BorderThickness="1"
