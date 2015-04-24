@@ -36,6 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Easy, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Easy.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -117,10 +121,6 @@
     <ProjectReference Include="..\Easy.WPF\Easy.WPF.csproj">
       <Project>{9d3a1d8d-1c3d-49bf-b236-41d058158bb0}</Project>
       <Name>Easy.WPF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EasyFrameWork\Easy.csproj">
-      <Project>{edb1baa7-ec61-4292-bbe5-3bc39eb171e4}</Project>
-      <Name>Easy</Name>
     </ProjectReference>
     <ProjectReference Include="..\VIP.Core\VIP.Core.csproj">
       <Project>{67c01bda-5c04-4a0c-bc13-4375df0049a8}</Project>

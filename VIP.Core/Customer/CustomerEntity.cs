@@ -10,7 +10,7 @@ namespace VIP.Core.Customer
     [DataConfigure(typeof(CustomerEntityMetaData))]
     public class CustomerEntity : HumanBase
     {
-        public string ID { get; set; }
+        public int ID { get; set; }
         /// <summary>
         /// 消费总额
         /// </summary>
@@ -43,7 +43,7 @@ namespace VIP.Core.Customer
         protected override void DataConfigure()
         {
             DataTable("Customer");
-            DataConfig(m => m.ID).AsPrimaryKey();
+            DataConfig(m => m.ID).AsIncreasePrimaryKey();
             DataConfig(m => m.Age).Ignore();
         }
 
@@ -53,9 +53,10 @@ namespace VIP.Core.Customer
             ViewConfig(m => m.Title).AsHidden();
             ViewConfig(m => m.LastName).AsHidden();
             ViewConfig(m => m.EnglishName).AsHidden();
+            ViewConfig(m => m.Email).AsTextBox().Email().Order(0);
             ViewConfig(m => m.FirstName).AsTextBox().Required().SearchAble().Order(1);
-            ViewConfig(m => m.CardID).AsTextBox().Required().SearchAble().Order(2);
-            ViewConfig(m => m.MobilePhone).AsTextBox().Required().SearchAble().Order(3);
+            ViewConfig(m => m.CardID).AsTextBox().SearchAble().Order(2);
+            ViewConfig(m => m.MobilePhone).AsTextBox().SearchAble().Order(3);
             ViewConfig(m => m.RegistDate).AsTextBox().SearchAble(false).Order(4).ReadOnly();
             ViewConfig(m => m.LastActivedDate).AsTextBox().Order(5).FormatAsDate().SearchAble(false);
             ViewConfig(m => m.Expendamount).AsTextBox().ReadOnly().Order(6).SearchAble(false);
@@ -63,7 +64,6 @@ namespace VIP.Core.Customer
             ViewConfig(m => m.Integral).AsTextBox().ReadOnly().Order(8).SearchAble(false);
             ViewConfig(m => m.SurplusIntegral).AsTextBox().ReadOnly().Order(9).SearchAble(false);
             ViewConfig(m => m.ExchangedIntegral).AsTextBox().ReadOnly().Order(10).SearchAble(false);
-           
         }
     }
 

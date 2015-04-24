@@ -82,7 +82,8 @@ namespace Easy.WPF.Extend
             {
                 column = new DataGridTextColumn();
             }
-            if (!tag.Grid.Visiable)
+
+            if (!tag.Grid.Visiable || tag is HiddenHtmlTag)
             {
                 column.Visibility = System.Windows.Visibility.Collapsed;
             }

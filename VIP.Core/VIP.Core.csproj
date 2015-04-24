@@ -34,6 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Easy, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Easy.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -57,6 +64,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Email\EmailCollect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Email\EmailEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ModelWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -72,6 +87,14 @@
     </Compile>
     <Compile Include="Customer\CustomerService.cs" />
     <Compile Include="Customer\ICustomerService.cs" />
+    <Compile Include="Email\EmailCollect.xaml.cs">
+      <DependentUpon>EmailCollect.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Email\EmailEditor.xaml.cs">
+      <DependentUpon>EmailEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Email\EmailMessage.cs" />
+    <Compile Include="Email\ImageControl.cs" />
     <Compile Include="ModelWindow.xaml.cs">
       <DependentUpon>ModelWindow.xaml</DependentUpon>
     </Compile>
@@ -93,6 +116,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -112,10 +136,6 @@
       <Project>{9d3a1d8d-1c3d-49bf-b236-41d058158bb0}</Project>
       <Name>Easy.WPF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EasyFrameWork\Easy.csproj">
-      <Project>{edb1baa7-ec61-4292-bbe5-3bc39eb171e4}</Project>
-      <Name>Easy</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\HisBackGround.png" />
@@ -126,6 +146,7 @@
   <ItemGroup>
     <Resource Include="Images\cancel.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -53,13 +53,13 @@
 		</Grid.RowDefinitions>
         <Border Grid.Row="0" BorderThickness="0,1" BorderBrush="#FF1B859C">
             <VirtualizingStackPanel Name="menuBar" Orientation="Horizontal" Margin="10,0">
-                <Button Name="Button_Customer" Content="会 员"   Height="86" Width="105"
+                <Button Tag="VIP.Core.Customer.CustomerPanel" Name="Button_Customer" Content="会 员"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageAccount}" Foreground="White" Margin="10"/>
 
-                <Button Name="Button_Card" Content="会 员 卡"   Height="86" Width="105"
+                <Button Tag="VIP.Core.Email.EmailCollect" Name="Button_Card" Content="会 员 卡"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageCart}" Foreground="White" Margin="10"/>
 
-                <Button Content="积分兑换"   Height="86" Width="105"
+                <Button Tag="VIP.Core.Email.EmailEditor" Content="积分兑换"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageCatalogue}" Foreground="White" Margin="10"/>
 
                 <Button Content="收 银"   Height="86" Width="105"
@@ -79,7 +79,6 @@
         
         <!---->
         <DockPanel Name="dockPanel_Main" Grid.Row="1">
-           <TextBox TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
         </DockPanel>
 
 	</Grid>

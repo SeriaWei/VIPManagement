@@ -127,7 +127,7 @@ namespace Easy.WPF
                     var control = item as ModelItemControlBase;
                     if (control.Value != null && control.Value.ToString() != string.Empty)
                     {
-                        filter.Where(attribute.MetaData.PropertyDataConfig[control.Name].ColumnName, OperatorType.Equal, control.Value);
+                        filter.Where(attribute.MetaData.PropertyDataConfig[control.Name].ColumnName, OperatorType.Contains, control.Value);
                     }
                 }
             }
