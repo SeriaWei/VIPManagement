@@ -29,6 +29,7 @@ namespace Easy.WPF
     {
         public static readonly DependencyProperty PageIndexProperty = DependencyProperty.Register("PageIndex", typeof(int), typeof(ListPanel));
         public static readonly DependencyProperty AllPageProperty = DependencyProperty.Register("AllPage", typeof(int), typeof(ListPanel));
+        public static readonly DependencyProperty TotalProperty = DependencyProperty.Register("Total", typeof(long), typeof(ListPanel));
 
         public event RoutedEventHandler EditClick;
 
@@ -67,7 +68,7 @@ namespace Easy.WPF
                 initPanel();
             }
         }
-        
+
         public int PageIndex
         {
             get { return (int)GetValue(PageIndexProperty); }
@@ -78,6 +79,11 @@ namespace Easy.WPF
             get { return (int)GetValue(AllPageProperty); }
             set { SetValue(AllPageProperty, value); }
         }
+        public long Total
+        {
+            get { return (long)GetValue(TotalProperty); }
+            set { SetValue(TotalProperty, value); }
+        }
         public void Service<T>(IServiceBase<T> service) where T : class
         {
             ModelType = typeof(T);
@@ -87,6 +93,7 @@ namespace Easy.WPF
                 this.dataGrid.ItemsSource = service.Get(filter, p); ;
                 PageIndex = p.PageIndexReal;
                 AllPage = p.AllPage;
+                Total = p.RecordCount;
             });
             Button_Prev.Click += (s, e) =>
             {
@@ -141,7 +148,7 @@ namespace Easy.WPF
                 var tags = attribute.GetHtmlTags(true).OrderBy(m => m.OrderIndex);
                 tags.Each(m =>
                 {
-                    if (!m.IsHidden && m.Grid.Searchable && m.Grid.Visiable)
+                    if (!(m is HiddenHtmlTag) && !m.IsHidden && m.Grid.Searchable && m.Grid.Visiable)
                     {
                         var control = m.ToModelItemControl(false);
                         control.Width = 150;
@@ -197,7 +204,10 @@ namespace Easy.WPF
                     dataGrid.Columns.Add(column);
                 });
             }
-            stackPanel_Search.Children.Add(_searchButton);
+            if (stackPanel_Search.Children.Count > 0)
+            {
+                stackPanel_ToolBar.Children.Add(_searchButton);
+            }
         }
         public void AddToToolBar(UIElement ele)
         {

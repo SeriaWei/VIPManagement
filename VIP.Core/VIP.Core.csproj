@@ -72,6 +72,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Email\EmailEditorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Email\EmailList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Email\SmtpSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ModelWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -81,7 +93,7 @@
     <Compile Include="Card\CardEntity.cs" />
     <Compile Include="Command\TopMenuCommand.cs" />
     <Compile Include="Customer\CustomerEntity.cs" />
-    <Compile Include="Customer\CustomerModule.cs" />
+    <Compile Include="CustomerModule.cs" />
     <Compile Include="Customer\CustomerPanel.xaml.cs">
       <DependentUpon>CustomerPanel.xaml</DependentUpon>
     </Compile>
@@ -90,11 +102,28 @@
     <Compile Include="Email\EmailCollect.xaml.cs">
       <DependentUpon>EmailCollect.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Email\EmailContext.cs" />
     <Compile Include="Email\EmailEditor.xaml.cs">
       <DependentUpon>EmailEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Email\EmailEditorWindow.xaml.cs">
+      <DependentUpon>EmailEditorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Email\EmailHost.cs" />
+    <Compile Include="Email\EmailHostService.cs" />
+    <Compile Include="Email\EmailList.xaml.cs">
+      <DependentUpon>EmailList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Email\EmailMessage.cs" />
+    <Compile Include="Email\EmailService.cs" />
+    <Compile Include="Email\IEmailHost.cs" />
+    <Compile Include="Email\IEmailService.cs" />
     <Compile Include="Email\ImageControl.cs" />
+    <Compile Include="Email\Sender.cs" />
+    <Compile Include="Email\SmtpSetting.xaml.cs">
+      <DependentUpon>SmtpSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Email\TestEmailContext.cs" />
     <Compile Include="ModelWindow.xaml.cs">
       <DependentUpon>ModelWindow.xaml</DependentUpon>
     </Compile>
@@ -146,7 +175,9 @@
   <ItemGroup>
     <Resource Include="Images\cancel.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\send.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

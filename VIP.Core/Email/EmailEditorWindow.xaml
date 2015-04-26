@@ -1,0 +1,9 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:VIP.Core.Email" x:Class="VIP.Core.Email.EmailEditorWindow"
+        Title="EmailEditorWindow" Height="700" Width="900" WindowStartupLocation="CenterScreen">
+    <Grid Name="Main">
+
+    </Grid>
+</Window>

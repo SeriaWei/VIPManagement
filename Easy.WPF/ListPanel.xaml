@@ -36,8 +36,10 @@
 
             <VirtualizingStackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="30,0" VerticalAlignment="Center">
                 <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="{Binding PageIndex}"></Label>
-                <Label Style="{StaticResource LabelStyle}" Foreground="White">/</Label>
+                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="/"></Label>
                 <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="{Binding AllPage}"></Label>
+                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content=" 总"></Label>
+                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="{Binding Total}"></Label>
             </VirtualizingStackPanel>
 
             <Button x:Name="Button_Next" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="25" Height="25" Background="{x:Null}" Template="{DynamicResource ButtonIconOnly}">

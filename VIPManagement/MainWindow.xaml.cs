@@ -45,6 +45,8 @@ namespace VIPManagement
                 }
             }
             menuBar.CommandBindings.Add(binding);
+
+            VIP.Core.Email.Sender.Start();
         }
 
     }

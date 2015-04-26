@@ -26,7 +26,7 @@ namespace VIP.Core.Email
 
         Regex oRegex = new Regex(Easy.Constant.RegularExpression.Chinese);
         Regex emailRegex = new Regex(Easy.Constant.RegularExpression.Email);
-        Regex pageRegex = new Regex(@"\[\d+\-\d+\]*");
+        Regex pageRegex = new Regex(@"\[\d+\-\d+\]");
         Customer.CustomerService customerService = new Customer.CustomerService();
         int total = 0;
         int added = 0;

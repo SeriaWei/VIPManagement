@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Easy.Modules.DataDictionary;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Easy.Extend;
 
 namespace VIP.Core.Email
 {
@@ -21,14 +23,26 @@ namespace VIP.Core.Email
     /// </summary>
     public partial class EmailEditor : UserControl
     {
+        public static DependencyProperty SubjectProperty = DependencyProperty.Register("Subject", typeof(string), typeof(EmailEditor));
+        public static DependencyProperty ReceiverProperty = DependencyProperty.Register("Receiver", typeof(string), typeof(EmailEditor));
+        public static DependencyProperty StatusProperty = DependencyProperty.Register("Status", typeof(int), typeof(EmailEditor));
+        public event Action<EmailMessage> SaveComplete;
         bool isUpdating = false;
+        IEmailService _emailService;
+        EmailMessage _message;
         public EmailEditor()
         {
+            InitializeComponent();
+        }
+        public EmailEditor(EmailMessage emailMessage)
+        {
+            _message = emailMessage;
             InitializeComponent();
         }
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
+            _emailService = Easy.Loader.CreateInstance<IEmailService>();
             WebBrowser_Email.Navigate(AppDomain.CurrentDomain.BaseDirectory + "tinymce\\Index.html");
             WebBrowser_Email.LoadCompleted += WebBrowser_Email_Navigated;
 
@@ -39,7 +53,40 @@ namespace VIP.Core.Email
 
             CommandBinding openImage = new CommandBinding(ApplicationCommands.Open, UpdatedImageExcuted, IsCanUpdate);
             this.CommandBindings.Add(openImage);
+
+            IDataDictionaryService dicService = Easy.Loader.CreateInstance<IDataDictionaryService>();
+            ComboBox_Status.ItemsSource = dicService.GetDictionaryByType("EmailMessage_Status");
+            ComboBox_Status.DataContext = this;
+            this.DataContext = this;
         }
+
+        public string Subject
+        {
+            get { return (string)GetValue(SubjectProperty); }
+            set
+            {
+                SetValue(SubjectProperty, value);
+            }
+        }
+
+        public string Receiver
+        {
+            get { return (string)GetValue(ReceiverProperty); }
+            set
+            {
+                SetValue(ReceiverProperty, value);
+            }
+        }
+
+        public int Status
+        {
+            get { return (int)GetValue(StatusProperty); }
+            set
+            {
+                SetValue(StatusProperty, value);
+            }
+        }
+
         private void UpdatedImageExcuted(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -57,7 +104,7 @@ namespace VIP.Core.Email
                             InsertImage(imageUrl);
                         }), imageUrl);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         this.Dispatcher.BeginInvoke(new Action<string>(msg =>
                         {
@@ -68,7 +115,7 @@ namespace VIP.Core.Email
                     {
                         isUpdating = false;
                     }
-                    
+
                 }));
 
             }
@@ -80,7 +127,20 @@ namespace VIP.Core.Email
 
         private void SaveExcuted(object sender, ExecutedRoutedEventArgs e)
         {
-
+            if (_message == null)
+            {
+                _message = new EmailMessage();
+            }
+            _message.Title = Subject;
+            _message.Receiver = Receiver;
+            _message.Status = Status;
+            _message.EmailContent = GetEmailContent();
+            _emailService.Save(_message);
+            MessageBox.Show("保存成功", "提示", MessageBoxButton.OK);
+            if (SaveComplete != null)
+            {
+                SaveComplete(_message);
+            }
         }
         private void IsCanSave(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -88,7 +148,13 @@ namespace VIP.Core.Email
         }
         void WebBrowser_Email_Navigated(object sender, NavigationEventArgs e)
         {
-            SetEmailContent("<img alt='Headerimage' src='http://moxiecode.cachefly.net/tinymce/v9/images/subimage/docs.gif' style='left:200px; position:absolute; display: block'>");
+            if (_message != null)
+            {
+                this.Subject = _message.Title;
+                this.Receiver = _message.Receiver;
+                this.Status = _message.Status;
+                this.SetEmailContent(_message.EmailContent);
+            }
         }
 
         void InsertImage(string url)
