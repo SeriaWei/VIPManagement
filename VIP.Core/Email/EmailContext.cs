@@ -45,17 +45,17 @@ namespace VIP.Core.Email
             else
             {
                 ICustomerService customerService = Easy.Loader.CreateInstance<ICustomerService>();
-                IEnumerable<CustomerEntity> customers = customerService.Get(new Easy.Data.DataFilter()
-                    .Where("ID", Easy.Data.OperatorType.GreaterThan, _emailMessage.LastCustId)
-                    .OrderBy("ID", Easy.Data.OrderType.Ascending),
-                    new Easy.Data.Pagination { PageSize = 1 });
-                if (!customers.Any()) return null;
-                customers.Each(m =>
+                Random ran = new Random(DateTime.Now.Millisecond + DateTime.Now.Second * 1000);
+                CustomerEntity entity = null;
+                while (entity == null)
                 {
-                    receivers.Add(new MailAddress(m.Email, m.FirstName));
-                    _emailMessage.Sended++;
-                    _emailMessage.LastCustId = m.ID;
-                });
+                    entity = customerService.Get(ran.Next(0, (int)_emailMessage.Total));
+                    if (entity.ID == _emailMessage.LastCustId)
+                        entity = null;
+                }
+                _emailMessage.LastCustId = entity.ID;
+                _emailMessage.Sended++;
+                receivers.Add(new MailAddress(entity.Email, entity.FirstName));
                 if (_emailMessage.Sended >= _emailMessage.Total)
                 {
                     _emailMessage.Status = 3;
