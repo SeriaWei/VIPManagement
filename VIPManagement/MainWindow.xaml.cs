@@ -34,6 +34,7 @@ namespace VIPManagement
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
+            
             var command = new TopMenuCommand();
             var binding = new UICommandBinding(command);
             foreach (UIElement item in menuBar.Children)

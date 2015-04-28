@@ -1,0 +1,46 @@
+<!doctype html>
+<!-- saved from url=(0023)http://www.contoso.com/ -->
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script type="text/javascript" src="tinymce.min.js"></script>
+    <script type="text/javascript" src="langs/zh_CN.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+    </style>
+</head>
+<body id="firstpage">
+    <div id="header">
+        <form method="post" action="somepage">
+            <textarea id="content" name="content" style="width:100%"></textarea>
+        </form>
+        <script type="text/javascript">
+            function setValue(val) {
+                document.getElementById("content").value = val;
+                return true;
+            }
+            function getValue() {
+                return tinymce.activeEditor.getContent();
+            }
+            function insertImage(src) {
+                tinyMCE.execCommand("mceInsertContent", false, "<img src='" + src + "'/>");
+            }
+            tinymce.init({
+                selector: "textarea",
+                height: window.innerHeight - 110,
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            });
+        </script>
+    </div>
+</body>
+</html>
