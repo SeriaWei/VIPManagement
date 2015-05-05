@@ -11,7 +11,7 @@ namespace VIP.Core.Common
 {
     public class TopMenuCommand : UICommand
     {
-
+        Dictionary<string, UIElement> tabs = new Dictionary<string, UIElement>();
         public override void Executed(object target, ExecutedRoutedEventArgs e)
         {
             foreach (UIElement item in (target as VirtualizingStackPanel).Children)
@@ -22,12 +22,22 @@ namespace VIP.Core.Common
                 }
             }
             (e.Source as Button).IsEnabled = false;
-            
+
             (e.Parameter as DockPanel).Children.Clear();
             if ((e.Source as Button).Tag != null)
             {
                 string Type = (e.Source as Button).Tag.ToString();
-                (e.Parameter as DockPanel).Children.Add(Activator.CreateInstance("VIP.Core", Type).Unwrap() as UIElement);
+                UIElement element;
+                if (tabs.ContainsKey(Type))
+                {
+                    element = tabs[Type];
+                }
+                else
+                {
+                    element = Activator.CreateInstance("VIP.Core", Type).Unwrap() as UIElement;
+                    tabs.Add(Type, element);
+                }
+                (e.Parameter as DockPanel).Children.Add(element);
             }
         }
 

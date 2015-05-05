@@ -4,45 +4,58 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <DataTemplate x:Key="EditColumnTemplate">
             <Button Template="{DynamicResource ButtonIconOnly}" Command="ApplicationCommands.Open" ToolTip="编辑">
                 <Image Source="Images/edit.png" Width="15" Height="15" />
             </Button>
         </DataTemplate>
+        <DataTemplate x:Key="DeleteColumnTemplate">
+            <Button Template="{DynamicResource ButtonIconOnly}" Command="ApplicationCommands.Delete" ToolTip="删除">
+                <Image Source="Images/delete.png" Width="15" Height="15" />
+            </Button>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" Margin="2">
+        <DockPanel Grid.Row="0" Margin="0">
             <StackPanel DockPanel.Dock="Left" Name="stackPanel_Search" Orientation="Horizontal"></StackPanel>
             <StackPanel DockPanel.Dock="Right" Name="stackPanel_ToolBar" Orientation="Horizontal" HorizontalAlignment="Right">
-                
+
             </StackPanel>
         </DockPanel>
         <DataGrid Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" SelectionUnit="Cell">
             <DataGrid.Columns>
+                <DataGridTemplateColumn CellTemplate="{StaticResource DeleteColumnTemplate}" IsReadOnly="True"></DataGridTemplateColumn>
                 <DataGridTemplateColumn CellTemplate="{StaticResource EditColumnTemplate}" IsReadOnly="True"></DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2" Name="grid_page">
-            <Button x:Name="Button_Prev" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="25"  Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
-                <Image Source="Images/prev.png" Width="15" Height="15"></Image>
-            </Button>
 
             <VirtualizingStackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="30,0" VerticalAlignment="Center">
+                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="当前第 "></Label>
                 <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="{Binding PageIndex}"></Label>
+                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content=" 页 "></Label>
                 <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="/"></Label>
+                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content=" 总共 "></Label>
                 <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="{Binding AllPage}"></Label>
-                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content=" 总"></Label>
+                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content=" 页 "></Label>
+                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content=" 共 "></Label>
                 <Label Style="{StaticResource LabelStyle}" Foreground="White" Content="{Binding Total}"></Label>
+                <Label Style="{StaticResource LabelStyle}" Foreground="White" Content=" 条记录"></Label>
             </VirtualizingStackPanel>
-
-            <Button x:Name="Button_Next" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="25" Height="25" Background="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
+            <Button Name="Button_Reload" Margin="0,2,38,2" HorizontalAlignment="Right" Width="25"  Height="26" Background="{x:Null}" BorderBrush="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
+                <Image Source="Images/reload.png"  Margin="2"/>
+            </Button>
+            <Button x:Name="Button_Prev" HorizontalAlignment="Right" Margin="0,2,65,2" VerticalAlignment="Center" Width="25"  Height="26" Background="{x:Null}" BorderBrush="{x:Null}" Template="{DynamicResource ButtonIconOnly}">
+                <Image Source="Images/prev.png" Width="15" Height="15"></Image>
+            </Button>
+            <Button x:Name="Button_Next" Margin="0,2,10,2" VerticalAlignment="Center" Height="26" Background="{x:Null}" Template="{DynamicResource ButtonIconOnly}" HorizontalAlignment="Right" Width="27" >
                 <Image Source="Images/next.png" Width="15" Height="15" />
             </Button>
         </Grid>

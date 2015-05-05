@@ -3,58 +3,58 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="VIPManagement.MainWindow"
-        Title="MainWindow" Height="700" Width="910" MinWidth="781" MinHeight="500" WindowStartupLocation="CenterScreen">
+        Title="邮件营销" Height="650" Width="800"  WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Image x:Key="ImageAccount" Source="Images/users.png"/>
         <Image x:Key="ImageCart" Source="Images/account.png"/>
         <Image x:Key="ImageCatalogue" Source="Images/catalogue.png"/>
-        <Image x:Key="ImageCash" Source="Images/cash.png"/>
+        <Image x:Key="ImageList" Source="Images/list.png"/>
         <Image x:Key="ImageProduct" Source="Images/product.png"/>
         <Image x:Key="ImageSetting" Source="Images/settings.png"/>
         <Image x:Key="ImageReport" Source="Images/report.png"/>
         <Style x:Key="Button_MainStyle" TargetType="{x:Type Button}">
-        	<Setter Property="BorderThickness" Value="1"/>
-        	<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-        	<Setter Property="HorizontalContentAlignment" Value="Center"/>
-        	<Setter Property="VerticalContentAlignment" Value="Center"/>
-        	<Setter Property="Padding" Value="1"/>
-        	<Setter Property="Template">
-        		<Setter.Value>
-        			<ControlTemplate TargetType="{x:Type Button}">
-        				<Border x:Name="border" BorderThickness="1" BorderBrush="#7FFFFFFF" Background="#33FFFFFF">
-        					<Grid>
-        						<Image x:Name="image" Margin="22.5,0,22.5,21" HorizontalAlignment="Center" VerticalAlignment="Center" 
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderThickness="1" BorderBrush="#7FFFFFFF" Background="#33FFFFFF">
+                            <Grid>
+                                <Image x:Name="image" Margin="22.5,0,22.5,21" HorizontalAlignment="Center" VerticalAlignment="Center" 
         							Source="{Binding Source}" Opacity="1" />
-        						<ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="11.683,0,11.683,5"/>
-        					</Grid>
-        				</Border>
-        				<ControlTemplate.Triggers>
-        					<Trigger Property="IsMouseOver" Value="True">
-        						<Setter Property="BorderBrush" TargetName="border" Value="#E5FFFFFF"/>
-        					</Trigger>
-        					<Trigger Property="IsEnabled" Value="False">
-        						<Setter Property="BorderBrush" TargetName="border" Value="#33FFFFFF"/>
-        						<Setter Property="Background" TargetName="border" Value="{x:Null}"/>
-        					</Trigger>
-        				</ControlTemplate.Triggers>
-        			</ControlTemplate>
-        		</Setter.Value>
-        	</Setter>
-        </Style>        
+                                <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="11.683,0,11.683,5"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#E5FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#33FFFFFF"/>
+                                <Setter Property="Background" TargetName="border" Value="{x:Null}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Window.Background>
         <ImageBrush ImageSource="Images/HisBackGround.png"/>
     </Window.Background>
-    
-	<Grid x:Name="grid">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="110"/>
-			<RowDefinition x:Name="ManContent"/>
-		</Grid.RowDefinitions>
+
+    <Grid x:Name="grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="110"/>
+            <RowDefinition x:Name="ManContent"/>
+        </Grid.RowDefinitions>
         <Border Grid.Row="0" BorderThickness="0,1" BorderBrush="#FF1B859C">
             <VirtualizingStackPanel Name="menuBar" Orientation="Horizontal" Margin="10,0">
                 <Button Tag="VIP.Core.Customer.CustomerPanel" Name="Button_Customer" Content="联系人"   Height="86" Width="105"
-					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageAccount}" Foreground="White" Margin="10"/>
+					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageAccount}" Foreground="White" Margin="20,10,10,10"/>
 
                 <Button Tag="VIP.Core.Email.EmailCollect" Name="Button_Card" Content="邮箱收集"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageCart}" Foreground="White" Margin="10"/>
@@ -63,20 +63,14 @@
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageCatalogue}" Foreground="White" Margin="10"/>
 
                 <Button Tag="VIP.Core.Email.EmailList" Content="邮件列表"   Height="86" Width="105"
-					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageCash}" Foreground="White" Margin="10"/>
-
-                <Button Content="发送状态"   Height="86" Width="105"
-					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageProduct}" Foreground="White" Margin="10"/>
-
-                <Button Content="报 表"   Height="86" Width="105"
-					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageReport}" Foreground="White" Margin="10"/>
+					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageList}" Foreground="White" Margin="10"/>
 
                 <Button Tag="VIP.Core.Email.SmtpSetting" Content="设 置"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageSetting}" Foreground="White" Margin="10"/>
             </VirtualizingStackPanel>
 
         </Border>
-        
+
         <!---->
         <DockPanel Name="dockPanel_Main" Grid.Row="1">
         </DockPanel>

@@ -35,12 +35,18 @@ namespace VIP.Core.Customer
             listPanel.EditClick += (s, ee) =>
             {
                 var wind = new ModelWindow();
+                wind.Height = 220;
                 wind.Service(service);
                 wind.Model = s;
+                wind.Title = (wind.Model as CustomerEntity).FirstName;
                 if (wind.ShowDialog() ?? false)
                 {
                     listPanel.Reload();
                 }
+            };
+            listPanel.DeleteClick += (s, ee) =>
+            {
+                service.Delete((s as CustomerEntity).ID);
             };
             Button add = new Button();
             add.Template = FindResource("ButtonIcon") as ControlTemplate;
@@ -50,8 +56,10 @@ namespace VIP.Core.Customer
             add.Click += (s, ee) =>
             {
                 var wind = new ModelWindow();
+                wind.Title = "添加联系人";
                 wind.Service(service);
                 wind.ModelType = typeof(CustomerEntity);
+                wind.Height = 220;
                 if (wind.ShowDialog() ?? false)
                 {
                     listPanel.Reload();

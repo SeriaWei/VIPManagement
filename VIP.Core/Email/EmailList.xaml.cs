@@ -37,7 +37,10 @@ namespace VIP.Core.Email
                     ListPanel_Email.Reload();
                 }
             };
-        
+            ListPanel_Email.DeleteClick += (s, ee) =>
+            {
+                _emailService.Delete((s as EmailMessage).ID);
+            };
         }
     }
 }

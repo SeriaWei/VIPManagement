@@ -12,22 +12,25 @@
     </UserControl.Resources>
 
     <Grid Background="#FF3DACC6">
-        <WPF:ListPanel Name="ListPanel_Host" Grid.Column="0" Margin="0,68,0,0"/>
-        <Label Grid.Column="0"  Content="邮箱" HorizontalAlignment="Left" Margin="26,10,0,0" VerticalAlignment="Top"/>
+        <WPF:ListPanel Name="ListPanel_Host" Grid.Column="0" Margin="0,35,0,0"/>
+        <Label Foreground="White" Grid.Column="0"  Content="邮箱" HorizontalAlignment="Left" Margin="26,10,0,0" VerticalAlignment="Top"/>
         <TextBox TextWrapping="NoWrap"  Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="65,12,0,0" Text="{Binding EmailAddress,Mode=TwoWay}" VerticalAlignment="Top" Width="169"/>
-        <Label Grid.Column="0"  Content="密码" HorizontalAlignment="Left" Margin="254,10,0,0" VerticalAlignment="Top"/>
-        <TextBox TextWrapping="NoWrap" Grid.Column="0"  HorizontalAlignment="Left" Height="23" Margin="293,12,0,0"  Text="{Binding PassWord,Mode=TwoWay}" VerticalAlignment="Top" Width="147"/>
-        <Label Grid.Column="0"  Content="用户名" HorizontalAlignment="Left" Margin="14,38,0,0" VerticalAlignment="Top"/>
+        <Label Foreground="White" Grid.Column="0"  Content="密码" HorizontalAlignment="Left" Margin="239,10,0,0" VerticalAlignment="Top"/>
+        <TextBox TextWrapping="NoWrap" Grid.Column="0"  HorizontalAlignment="Left" Height="23" Margin="278,12,0,0"  Text="{Binding PassWord,Mode=TwoWay}" VerticalAlignment="Top" Width="147"/>
+        <Label Foreground="White" Grid.Column="0"  Content="用户名" HorizontalAlignment="Left" Margin="14,38,0,0" VerticalAlignment="Top"/>
         <TextBox TextWrapping="NoWrap"  Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="65,40,0,0" Text="{Binding UserName,Mode=TwoWay}" VerticalAlignment="Top" Width="169"/>
-        <Label Grid.Column="0"  Content="SMTP" HorizontalAlignment="Left" Margin="250,38,0,0" VerticalAlignment="Top"/>
-        <TextBox TextWrapping="NoWrap" Grid.Column="0"  HorizontalAlignment="Left" Height="23" Margin="293,40,0,0"  Text="{Binding SmtpHost,Mode=TwoWay}" VerticalAlignment="Top" Width="147"/>
-        <Label Grid.Column="0"  Content="端口" HorizontalAlignment="Left" Margin="462,10,0,0" VerticalAlignment="Top"/>
-        <TextBox Grid.Column="0"  HorizontalAlignment="Left" Height="23" Margin="501,12,0,0" TextWrapping="NoWrap" Text="{Binding Port,Mode=TwoWay}" VerticalAlignment="Top" Width="169"/>
-        <Label Grid.Column="0"  Content="启用SSL" HorizontalAlignment="Left" Margin="445,38,0,0" VerticalAlignment="Top"/>
-        <CheckBox Grid.Column="0"  HorizontalAlignment="Left"  Margin="499,42,0,0"  VerticalAlignment="Top" IsChecked="{Binding IsSSL,Mode=TwoWay}" />
-        <Button Command="ApplicationCommands.Save" Template="{DynamicResource ButtonIcon}" DataContext="{StaticResource ImageSave}" Content="保存" Height="25" Foreground="White" Margin="757,12,0,0" HorizontalAlignment="Left" Width="55" VerticalAlignment="Top"></Button>
-        <Button Command="ApplicationCommands.Find" Template="{DynamicResource ButtonIcon}" DataContext="{StaticResource ImageSend}" Content="测试" Height="25" Foreground="White" Margin="696,12,0,0" HorizontalAlignment="Left" Width="55" VerticalAlignment="Top"/>
-        <Label Grid.Column="0"  Content="启用" HorizontalAlignment="Left" Margin="534,38,0,0" VerticalAlignment="Top"/>
-        <CheckBox Grid.Column="0"  HorizontalAlignment="Left"  Margin="571,42,0,0"  VerticalAlignment="Top" IsChecked="{Binding IsEnable, Mode=TwoWay}" />
+        <Label Foreground="White" Grid.Column="0"  Content="SMTP" HorizontalAlignment="Left" Margin="235,38,0,0" VerticalAlignment="Top"/>
+        <TextBox TextWrapping="NoWrap" Grid.Column="0"  HorizontalAlignment="Left" Height="23" Margin="278,40,0,0"  Text="{Binding SmtpHost,Mode=TwoWay}" VerticalAlignment="Top" Width="147"/>
+        <Label Foreground="White" Grid.Column="0"  Content="端口" HorizontalAlignment="Left" Margin="443,10,0,0" VerticalAlignment="Top"/>
+        <TextBox Grid.Column="0"  HorizontalAlignment="Left" Height="23" Margin="482,12,0,0" TextWrapping="NoWrap" Text="{Binding Port,Mode=TwoWay}" VerticalAlignment="Top" Width="86"/>
+        <Label Foreground="White" Grid.Column="0"  Content="启用SSL" HorizontalAlignment="Left" Margin="426,38,0,0" VerticalAlignment="Top"/>
+        <CheckBox Grid.Column="0"  HorizontalAlignment="Left"  Margin="480,42,0,0"  VerticalAlignment="Top" IsChecked="{Binding IsSSL,Mode=TwoWay}" />
+        <Button Command="ApplicationCommands.Save" Template="{DynamicResource ButtonIcon}" DataContext="{StaticResource ImageSave}" Content="保存" Height="25" Foreground="White" Margin="580,38,0,0" HorizontalAlignment="Left" Width="55" VerticalAlignment="Top"></Button>
+        <Button Command="ApplicationCommands.Find" Template="{DynamicResource ButtonIcon}" DataContext="{StaticResource ImageSend}" Content="测试" Height="25" Foreground="White" Margin="580,10,0,0" HorizontalAlignment="Left" Width="55" VerticalAlignment="Top"/>
+        <Label Foreground="White" Grid.Column="0"  Content="启用" HorizontalAlignment="Left" Margin="515,38,0,0" VerticalAlignment="Top"/>
+        <CheckBox Grid.Column="0"  HorizontalAlignment="Left"  Margin="552,42,0,0"  VerticalAlignment="Top" IsChecked="{Binding IsEnable, Mode=TwoWay}" />
+
+        <Rectangle HorizontalAlignment="Left" Height="22" Margin="653,41,0,0" Stroke="AntiqueWhite" VerticalAlignment="Top" Width="110"/>
+        <CheckBox Name="CheckBox_IsServiceEnable" Checked="IsServiceEnable_Checked" Unchecked="IsServiceEnable_Checked" Foreground="White" Content="启动发送服务？" HorizontalAlignment="Left" Margin="656,45,0,0" VerticalAlignment="Top" IsChecked="{Binding IsServiceEnable, Mode=TwoWay}"/>
     </Grid>
 </UserControl>

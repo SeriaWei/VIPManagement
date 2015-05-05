@@ -65,6 +65,7 @@
       <DependentUpon>ListPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValidationRuleProvide.cs" />
+    <Compile Include="ValueConverter\BoolenValueConvert.cs" />
     <Compile Include="ValueConverter\DictionaryValueConverter.cs" />
     <Page Include="Controls\CheckBoxItem.xaml">
       <SubType>Designer</SubType>
@@ -150,6 +151,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\reload.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

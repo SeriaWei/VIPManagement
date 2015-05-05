@@ -78,6 +78,14 @@ namespace Easy.WPF.Extend
                 binding.ConverterParameter = (tag as DropDownListHtmlTag).OptionItems;
                 column.Binding = binding;
             }
+            else if (tag.Value is Boolean)
+            {
+                column = new DataGridTextColumn();
+                Binding binding = new Binding(tag.Name);
+                binding.Converter = new BoolenValueConvert();
+                binding.ConverterParameter = tag.Value;
+                column.Binding = binding;
+            }
             else
             {
                 column = new DataGridTextColumn();

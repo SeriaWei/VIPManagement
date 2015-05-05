@@ -26,6 +26,7 @@ namespace VIP.Core.Email
         public static DependencyProperty UserNameProperty = DependencyProperty.Register("UserName", typeof(string), typeof(SmtpSetting));
         public static DependencyProperty PassWordProperty = DependencyProperty.Register("PassWord", typeof(string), typeof(SmtpSetting));
         public static DependencyProperty IsEnableProperty = DependencyProperty.Register("IsEnable", typeof(bool), typeof(SmtpSetting));
+        public static DependencyProperty IsServiceEnableProperty = DependencyProperty.Register("IsServiceEnable", typeof(bool), typeof(SmtpSetting));
         EmailHost _emailHost;
         IEmailHostService _emailHostService;
         public string SmtpHost
@@ -105,6 +106,17 @@ namespace VIP.Core.Email
                 SetValue(IsEnableProperty, value);
             }
         }
+        public bool IsServiceEnable
+        {
+            get
+            {
+                return (bool)GetValue(IsServiceEnableProperty);
+            }
+            set
+            {
+                SetValue(IsServiceEnableProperty, value);
+            }
+        }
         public SmtpSetting()
         {
             InitializeComponent();
@@ -120,20 +132,30 @@ namespace VIP.Core.Email
             _emailHostService = Easy.Loader.CreateInstance<IEmailHostService>();
             ListPanel_Host.Service(_emailHostService);
             ListPanel_Host.EditClick += ListPanel_Host_EditClick;
+            ListPanel_Host.DeleteClick += ListPanel_Host_DeleteClick;
             this.DataContext = this;
             Clear();
+
+            IsServiceEnable = Sender.GetSetting().IsEnable;
+        }
+
+        void ListPanel_Host_DeleteClick(object sender, RoutedEventArgs e)
+        {
+            _emailHostService.Delete((sender as EmailHost).ID);
         }
 
         void Save(object sender, ExecutedRoutedEventArgs e)
         {
-            InitEmailHost();
-            _emailHostService.Save(_emailHost);
-            _emailHost = null;
-            Clear();
-            ListPanel_Host.Reload();
+            if (InitEmailHost())
+            {
+                _emailHostService.Save(_emailHost);
+                _emailHost = null;
+                Clear();
+                ListPanel_Host.Reload();
+            }
         }
 
-        private void InitEmailHost()
+        private bool InitEmailHost()
         {
             if (_emailHost == null)
             {
@@ -142,22 +164,30 @@ namespace VIP.Core.Email
             _emailHost.SmtpHost = SmtpHost;
             _emailHost.Port = Port;
             _emailHost.IsSSL = IsSSL;
+            if (!System.Text.RegularExpressions.Regex.IsMatch(EmailAddress, Easy.Constant.RegularExpression.Email))
+            {
+                MessageBox.Show("邮箱格式错误！", "错误");
+                return false;
+            }
             _emailHost.EmailAddress = EmailAddress;
             _emailHost.PassWord = PassWord;
             _emailHost.UserName = UserName;
             _emailHost.IsEnable = IsEnable;
+            return true;
         }
         void Test(object sender, ExecutedRoutedEventArgs e)
         {
-            InitEmailHost();
-            try
+            if (InitEmailHost())
             {
-                new Easy.Net.Email.EmailSender().Send(new TestEmailContext(_emailHost));                
-                MessageBox.Show("测试成功，可以正常使用！", "提示", MessageBoxButton.OK);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("测试失败！" + ex.Message, "提示", MessageBoxButton.OK);
+                try
+                {
+                    new Easy.Net.Email.EmailSender().Send(new TestEmailContext(_emailHost));
+                    MessageBox.Show("测试成功，可以正常使用！", "提示", MessageBoxButton.OK);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("测试失败！" + ex.Message, "提示", MessageBoxButton.OK);
+                }
             }
         }
         void Clear()
@@ -188,6 +218,11 @@ namespace VIP.Core.Email
                 UserName = _emailHost.UserName;
                 IsEnable = _emailHost.IsEnable;
             }
+        }
+
+        private void IsServiceEnable_Checked(object sender, RoutedEventArgs e)
+        {
+            Sender.SaveSetting(new ServiceSetting { IsEnable = IsServiceEnable, Seconds = 30 });
         }
     }
 }

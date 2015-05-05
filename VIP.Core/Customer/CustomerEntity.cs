@@ -53,17 +53,31 @@ namespace VIP.Core.Customer
             ViewConfig(m => m.Title).AsHidden();
             ViewConfig(m => m.LastName).AsHidden();
             ViewConfig(m => m.EnglishName).AsHidden();
-            ViewConfig(m => m.Email).AsTextBox().Email().Order(0);
-            ViewConfig(m => m.FirstName).AsTextBox().Required().SearchAble().Order(1);
-            ViewConfig(m => m.CardID).AsTextBox().SearchAble().Order(2);
-            ViewConfig(m => m.MobilePhone).AsTextBox().SearchAble().Order(3);
-            ViewConfig(m => m.RegistDate).AsTextBox().SearchAble(false).Order(4).ReadOnly();
-            ViewConfig(m => m.LastActivedDate).AsTextBox().Order(5).FormatAsDate().SearchAble(false);
-            ViewConfig(m => m.Expendamount).AsTextBox().ReadOnly().Order(6).SearchAble(false);
-            ViewConfig(m => m.Surplus).AsTextBox().ReadOnly().Order(7).SearchAble(false);
-            ViewConfig(m => m.Integral).AsTextBox().ReadOnly().Order(8).SearchAble(false);
-            ViewConfig(m => m.SurplusIntegral).AsTextBox().ReadOnly().Order(9).SearchAble(false);
-            ViewConfig(m => m.ExchangedIntegral).AsTextBox().ReadOnly().Order(10).SearchAble(false);
+            ViewConfig(m => m.Email).AsTextBox().Email().Order(0).SetDisplayName("邮箱");
+            ViewConfig(m => m.FirstName).AsTextBox().Required().SearchAble().Order(1).SetDisplayName("姓名");
+            ViewConfig(m => m.CardID).AsHidden();
+            ViewConfig(m => m.MobilePhone).AsTextBox().SearchAble().Order(3).SetDisplayName("手机");
+            ViewConfig(m => m.RegistDate).AsTextBox().SearchAble(false).Order(4).ReadOnly().SetDisplayName("注册日期").Format("yyyy/MM/dd HH:mm");
+            ViewConfig(m => m.LastActivedDate).AsHidden();
+            ViewConfig(m => m.Expendamount).AsHidden();
+            ViewConfig(m => m.Surplus).AsHidden();
+            ViewConfig(m => m.Integral).AsHidden();
+            ViewConfig(m => m.SurplusIntegral).AsHidden();
+            ViewConfig(m => m.ExchangedIntegral).AsHidden();
+            ViewConfig(m => m.Age).AsHidden();
+            ViewConfig(m => m.NickName).AsHidden();
+            ViewConfig(m => m.Birthday).AsHidden();
+            ViewConfig(m => m.Address).AsHidden();
+            ViewConfig(m => m.School).AsHidden();
+            ViewConfig(m => m.ZipCode).AsHidden();
+            ViewConfig(m => m.Telephone).AsHidden();
+            ViewConfig(m => m.Profession).AsHidden();
+            ViewConfig(m => m.MaritalStatus).AsHidden();
+            ViewConfig(m => m.Hobby).AsHidden();
+            ViewConfig(m => m.Birthplace).AsHidden();
+            ViewConfig(m => m.Description).AsMutiLineTextBox().SetDisplayName("描述").SearchAble(false);
+            ViewConfig(m => m.Status).AsHidden();
+            ViewConfig(m => m.Sex).AsHidden();
         }
     }
 

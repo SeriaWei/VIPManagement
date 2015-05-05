@@ -27,12 +27,11 @@ namespace VIP.Core.Email
 
         protected override void ViewConfigure()
         {
-            ViewConfig(m => m.Title).AsTextBox();
-            ViewConfig(m => m.Sended).AsTextBox();
-            ViewConfig(m => m.CreateDate).AsTextBox().SearchAble(false);
-            ViewConfig(m => m.LastUpdateDate).AsTextBox().SearchAble(false);
-            ViewConfig(m => m.Status).AsDropDownList().DataSource(Easy.Constant.SourceType.Dictionary);
-            ViewConfig(m => m.Title).AsTextBox();
+            ViewConfig(m => m.Title).AsTextBox().SetDisplayName("主题");
+            ViewConfig(m => m.Sended).AsTextBox().SetDisplayName("发送量");
+            ViewConfig(m => m.CreateDate).AsTextBox().SearchAble(false).SetDisplayName("创建日期");
+            ViewConfig(m => m.LastUpdateDate).AsTextBox().SearchAble(false).SetDisplayName("最后发送日期");
+            ViewConfig(m => m.Status).AsDropDownList().DataSource(Easy.Constant.SourceType.Dictionary).SetDisplayName("发送状态");
             ViewConfig(m => m.Description).AsHidden();
         }
     }

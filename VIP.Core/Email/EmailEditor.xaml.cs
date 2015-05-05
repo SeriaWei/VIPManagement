@@ -127,9 +127,11 @@ namespace VIP.Core.Email
 
         private void SaveExcuted(object sender, ExecutedRoutedEventArgs e)
         {
+            bool create = false;
             if (_message == null)
             {
                 _message = new EmailMessage();
+                create = true;
             }
             _message.Title = Subject;
             _message.Receiver = Receiver;
@@ -140,6 +142,13 @@ namespace VIP.Core.Email
             if (SaveComplete != null)
             {
                 SaveComplete(_message);
+            }
+            if (create)
+            {
+                _message = null;
+                Subject = string.Empty;
+                Receiver = string.Empty;
+                SetEmailContent("");
             }
         }
         private void IsCanSave(object sender, CanExecuteRoutedEventArgs e)

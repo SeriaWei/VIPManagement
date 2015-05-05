@@ -12,6 +12,10 @@ namespace VIP.Core.Email
         public void Save(EmailMessage message)
         {
             message.Total = Easy.Loader.CreateInstance<ICustomerService>().Count(new Easy.Data.DataFilter());
+            if (message.Status == 1)
+            {
+                message.Sended = 0;
+            }
             if (message.ID > 0)
             {
                 Update(message);

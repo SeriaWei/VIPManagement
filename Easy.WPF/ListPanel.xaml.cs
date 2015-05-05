@@ -32,6 +32,7 @@ namespace Easy.WPF
         public static readonly DependencyProperty TotalProperty = DependencyProperty.Register("Total", typeof(long), typeof(ListPanel));
 
         public event RoutedEventHandler EditClick;
+        public event RoutedEventHandler DeleteClick;
 
         private Action ReloadData;
 
@@ -49,13 +50,27 @@ namespace Easy.WPF
         {
             base.OnInitialized(e);
             CommandBinding binding = new CommandBinding(ApplicationCommands.Open, EditCommandExcuted);
-            this.CommandBindings.Add(binding);
+            this.dataGrid.CommandBindings.Add(binding);
+            CommandBinding bindingDelete = new CommandBinding(ApplicationCommands.Delete, DeleteCommandExcuted);
+            this.dataGrid.CommandBindings.Add(bindingDelete);
         }
         void EditCommandExcuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (EditClick != null)
             {
                 EditClick((e.OriginalSource as Button).DataContext, e);
+            }
+        }
+        void DeleteCommandExcuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (DeleteClick != null)
+            {
+                if (MessageBox.Show("确定要删除吗？", "删除确认", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    DeleteClick((e.OriginalSource as Button).DataContext, e);
+                    this.Reload();
+                }
+
             }
         }
         Type _modelType;
@@ -118,6 +133,10 @@ namespace Easy.WPF
             {
                 search.Invoke(GetFilter(), new Pagination { PageIndex = PageIndex - 1 });
             });
+            Button_Reload.Click += (s, e) =>
+            {
+                Reload();
+            };
             search.Invoke(new DataFilter(), new Pagination { });
             this.DataContext = this;
         }
@@ -152,7 +171,7 @@ namespace Easy.WPF
                     {
                         var control = m.ToModelItemControl(false);
                         control.Width = 150;
-                        control.Margin = new Thickness(2);
+                        control.Margin = new Thickness(0);
                         control.IsEnabled = true;
                         Binding bind = new Binding("Foreground");
                         bind.Source = this;
@@ -206,11 +225,13 @@ namespace Easy.WPF
             }
             if (stackPanel_Search.Children.Count > 0)
             {
+                _searchButton.Margin = new Thickness(5);
                 stackPanel_ToolBar.Children.Add(_searchButton);
             }
         }
-        public void AddToToolBar(UIElement ele)
+        public void AddToToolBar(FrameworkElement ele)
         {
+            ele.Margin = new Thickness(5);
             stackPanel_ToolBar.Children.Add(ele);
         }
 

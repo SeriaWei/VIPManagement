@@ -32,13 +32,13 @@ namespace VIP.Core.Email
         {
             ViewConfig(m => m.ID).AsHidden();
             ViewConfig(m => m.PassWord).AsHidden();
-            ViewConfig(m => m.SmtpHost).AsTextBox().SearchAble(false);
-            ViewConfig(m => m.Port).AsTextBox().SearchAble(false);
-            ViewConfig(m => m.IsSSL).AsTextBox().SearchAble(false);
-            ViewConfig(m => m.EmailAddress).AsTextBox().SearchAble(false);
-            ViewConfig(m => m.UserName).AsTextBox().SearchAble(false);
-            ViewConfig(m => m.UseTimes).AsTextBox().SearchAble(false);
-            ViewConfig(m => m.IsEnable).AsCheckBox().SearchAble(false);
+            ViewConfig(m => m.SmtpHost).AsTextBox().SearchAble(false).SetDisplayName("SMTP服务器");
+            ViewConfig(m => m.Port).AsTextBox().SearchAble(false).SetDisplayName("端口");
+            ViewConfig(m => m.IsSSL).AsCheckBox().SearchAble(false).SetDisplayName("启用SSL");
+            ViewConfig(m => m.EmailAddress).AsTextBox().SearchAble(false).SetDisplayName("邮箱");
+            ViewConfig(m => m.UserName).AsTextBox().SearchAble(false).SetDisplayName("用户名");
+            ViewConfig(m => m.UseTimes).AsTextBox().SearchAble(false).SetDisplayName("使用次数");
+            ViewConfig(m => m.IsEnable).AsCheckBox().SearchAble(false).SetDisplayName("是否启用");
         }
     }
 

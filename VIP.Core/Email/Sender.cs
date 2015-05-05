@@ -1,21 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace VIP.Core.Email
 {
+    public class ServiceSetting
+    {
+        public bool IsEnable { get; set; }
+        public int Seconds { get; set; }
+    }
     public static class Sender
     {
         public static bool IsSenderEnable = true;
-        public static int SleepSecond = 20;
+        public static int SleepSecond = 30;
+        const string ConfigFileName = "Service.config";
         public static void Start()
         {
             Task.Factory.StartNew(new Action(() =>
             {
                 IEmailHostService emailHostService = Easy.Loader.CreateInstance<IEmailHostService>();
-
+                IsSenderEnable = GetSetting().IsEnable;
                 while (true)
                 {
                     while (IsSenderEnable && emailHostService.Count(new Easy.Data.DataFilter().Where("IsEnable=true")) > 0)
@@ -55,6 +62,28 @@ namespace VIP.Core.Email
         public static void Stop()
         {
             IsSenderEnable = false;
+        }
+
+        public static ServiceSetting GetSetting()
+        {
+            if (File.Exists(ConfigFileName))
+            {
+                try
+                {
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ServiceSetting>(File.ReadAllText(ConfigFileName, Encoding.UTF8));
+                }
+                catch
+                {
+                    File.Delete(ConfigFileName);
+                    return new ServiceSetting { IsEnable = IsSenderEnable, Seconds = SleepSecond };
+                }
+            }
+            else return new ServiceSetting { IsEnable = IsSenderEnable, Seconds = SleepSecond };
+        }
+        public static void SaveSetting(ServiceSetting setting)
+        {
+            IsSenderEnable = setting.IsEnable;
+            File.WriteAllText(ConfigFileName, Newtonsoft.Json.JsonConvert.SerializeObject(setting), Encoding.UTF8);
         }
     }
 }

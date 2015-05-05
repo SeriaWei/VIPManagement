@@ -89,7 +89,38 @@
             		</Trigger>
             	</ControlTemplate.Triggers>
             </ControlTemplate>
-
+            <ControlTemplate x:Key="ButtonNormal" TargetType="{x:Type Button}">
+                <Border x:Name="border" BorderThickness="1" BorderBrush="#7FFFFFFF" Background="#33FFFFFF">
+                    <StackPanel x:Name="grid" RenderTransformOrigin="0.5,0.5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,2">
+                        <StackPanel.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </StackPanel.RenderTransform>
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Background" TargetName="border" Value="#33646464"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="RenderTransform" TargetName="grid">
+                            <Setter.Value>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
             <LinearGradientBrush x:Key="TextBoxBorder" StartPoint="0,0" MappingMode="Absolute" EndPoint="0,20">
                 <GradientStop Color="#ABADB3" Offset="0.05"/>
                 <GradientStop Color="#E2E3EA" Offset="0.07"/>
@@ -145,7 +176,14 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
+            <Style BasedOn="{x:Null}" TargetType="{x:Type Label}">
+                <Setter Property="Foreground" Value="White"></Setter>
+            </Style>
+            <Style BasedOn="{x:Null}" TargetType="{x:Type Button}">
+                <Setter Property="Foreground" Value="White"></Setter>
+                <Setter Property="Template" Value="{StaticResource ButtonNormal}">                    
+                </Setter>
+            </Style>
         </ResourceDictionary>
 
     </Application.Resources>
