@@ -43,7 +43,7 @@ namespace VIP.Core.Email
         {
             base.OnInitialized(e);
             _emailService = Easy.Loader.CreateInstance<IEmailService>();
-            WebBrowser_Email.Navigate(AppDomain.CurrentDomain.BaseDirectory + "tinymce\\Index.html");
+            WebBrowser_Email.Navigate(new Uri(AppDomain.CurrentDomain.BaseDirectory + "tinymce\\Index.html"));
             WebBrowser_Email.LoadCompleted += WebBrowser_Email_Navigated;
 
 

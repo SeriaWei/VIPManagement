@@ -1,7 +1,7 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Helpe="clr-namespace:VIP.Core.Helpe;assembly=VIP.Core" mc:Ignorable="d"
     x:Class="VIPManagement.MainWindow"
         Title="邮件营销" Height="650" Width="800"  WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -12,6 +12,7 @@
         <Image x:Key="ImageProduct" Source="Images/product.png"/>
         <Image x:Key="ImageSetting" Source="Images/settings.png"/>
         <Image x:Key="ImageReport" Source="Images/report.png"/>
+        <Image x:Key="ImageHelp" Source="Images/help.png"/>
         <Style x:Key="Button_MainStyle" TargetType="{x:Type Button}">
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -52,11 +53,11 @@
             <RowDefinition x:Name="ManContent"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" BorderThickness="0,1" BorderBrush="#FF1B859C">
-            <VirtualizingStackPanel Name="menuBar" Orientation="Horizontal" Margin="10,0">
-                <Button Tag="VIP.Core.Customer.CustomerPanel" Name="Button_Customer" Content="联系人"   Height="86" Width="105"
-					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageAccount}" Foreground="White" Margin="20,10,10,10"/>
+            <VirtualizingStackPanel x:Name="menuBar" Orientation="Horizontal" Margin="10,0">
+                <Button Tag="VIP.Core.Customer.CustomerPanel" x:Name="Button_Customer" Content="联系人"   Height="86" Width="105"
+					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageAccount}" Foreground="White" Margin="10,10,10,10"/>
 
-                <Button Tag="VIP.Core.Email.EmailCollect" Name="Button_Card" Content="邮箱收集"   Height="86" Width="105"
+                <Button Tag="VIP.Core.Email.EmailCollect" x:Name="Button_Card" Content="邮箱收集"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageCart}" Foreground="White" Margin="10"/>
 
                 <Button Tag="VIP.Core.Email.EmailEditor" Content="创建邮件"   Height="86" Width="105"
@@ -67,13 +68,16 @@
 
                 <Button Tag="VIP.Core.Email.SmtpSetting" Content="设 置"   Height="86" Width="105"
 					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageSetting}" Foreground="White" Margin="10"/>
+                <Button Tag="VIP.Core.Helpe.HelpePanel" Content="帮 助"   Height="86" Width="105"
+					Style="{StaticResource Button_MainStyle}" DataContext="{StaticResource ImageHelp}" Foreground="White" Margin="10"/>
             </VirtualizingStackPanel>
 
         </Border>
 
         <!---->
-        <DockPanel Name="dockPanel_Main" Grid.Row="1">
-        </DockPanel>
+		<DockPanel x:Name="dockPanel_Main" Grid.Row="1">
+			<Helpe:HelpePanel Height="509" VerticalAlignment="Top"/>
+		</DockPanel>
 
 	</Grid>
 </Window>

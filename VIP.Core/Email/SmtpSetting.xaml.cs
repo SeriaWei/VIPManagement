@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Easy.Modules.DataDictionary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Easy.Extend;
 
 namespace VIP.Core.Email
 {
@@ -135,8 +137,11 @@ namespace VIP.Core.Email
             ListPanel_Host.DeleteClick += ListPanel_Host_DeleteClick;
             this.DataContext = this;
             Clear();
-
-            IsServiceEnable = Sender.GetSetting().IsEnable;
+            IDataDictionaryService dataDictionaryService = Easy.Loader.CreateInstance<IDataDictionaryService>();
+            ComboBox_Duration.ItemsSource = dataDictionaryService.GetDictionaryByType("SendSeconds");
+            ServiceSetting setting = Sender.GetSetting();
+            IsServiceEnable = setting.IsEnable;
+            ComboBox_Duration.SelectedValue = setting.Seconds;
         }
 
         void ListPanel_Host_DeleteClick(object sender, RoutedEventArgs e)
@@ -222,7 +227,12 @@ namespace VIP.Core.Email
 
         private void IsServiceEnable_Checked(object sender, RoutedEventArgs e)
         {
-            Sender.SaveSetting(new ServiceSetting { IsEnable = IsServiceEnable, Seconds = 30 });
+            Sender.SaveSetting(new ServiceSetting { IsEnable = IsServiceEnable, Seconds = Convert.ToInt32(ComboBox_Duration.SelectedValue) });
+        }
+
+        private void ComboBox_Duration_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Sender.SaveSetting(new ServiceSetting { IsEnable = IsServiceEnable, Seconds = Convert.ToInt32(ComboBox_Duration.SelectedValue) });
         }
     }
 }

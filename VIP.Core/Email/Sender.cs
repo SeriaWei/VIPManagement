@@ -22,7 +22,9 @@ namespace VIP.Core.Email
             Task.Factory.StartNew(new Action(() =>
             {
                 IEmailHostService emailHostService = Easy.Loader.CreateInstance<IEmailHostService>();
-                IsSenderEnable = GetSetting().IsEnable;
+                ServiceSetting setting = GetSetting();
+                IsSenderEnable = setting.IsEnable;
+                SleepSecond = setting.Seconds;
                 while (true)
                 {
                     while (IsSenderEnable && emailHostService.Count(new Easy.Data.DataFilter().Where("IsEnable=true")) > 0)
@@ -83,6 +85,7 @@ namespace VIP.Core.Email
         public static void SaveSetting(ServiceSetting setting)
         {
             IsSenderEnable = setting.IsEnable;
+            SleepSecond = setting.Seconds;
             File.WriteAllText(ConfigFileName, Newtonsoft.Json.JsonConvert.SerializeObject(setting), Encoding.UTF8);
         }
     }

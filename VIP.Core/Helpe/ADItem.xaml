@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="VIP.Core.Helpe.ADItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Margin="5"
+             Width="180"
+             Height="235" MouseUp="UserControl_MouseUp">
+    <!--<UserControl.Effect>
+		<DropShadowEffect Color="Black" BlurRadius="5" Direction="315" Opacity=".5"/>
+	</UserControl.Effect>-->
+    <Grid Cursor="Hand">
+        <Grid Name="Grid_Title" Background="#FF50D4D6" Height="46" VerticalAlignment="Top">
+            <TextBlock Name="TextBlock_Title" Margin="5" TextWrapping="WrapWithOverflow" Text="自己收集邮箱太慢来我自己收集邮箱太慢来我" Foreground="White" FontSize="14"/>
+        </Grid>
+        <Grid Background="White" Margin="0,46,0,53">
+            <Image Name="Image_Main" Source="/VIP.Core;component/Images/Email.png" Stretch="UniformToFill"/>
+        </Grid>
+        <Grid Background="#FFFBFCFE" Height="53" VerticalAlignment="Bottom">
+            <Border BorderThickness="0,1,0,0" BorderBrush="#FFC5C5C5">
+                <TextBlock Name="TextBlock_Description" Margin="5" TextWrapping="WrapWithOverflow" Text="自己收集邮箱太慢来我们的淘宝店铺购买10万邮箱" Foreground="#FF787878" FontSize="11"></TextBlock>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
